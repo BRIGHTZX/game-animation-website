@@ -1,0 +1,144 @@
+"use client";
+import { LOGO } from "@/constants";
+import gsap from "gsap";
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+
+function Navbar() {
+  const [position, setPosition] = useState({ left: 0, width: 0, opacity: 0 });
+  return (
+    <div className="container">
+      <div className="fixed top-0 left-0 z-50 w-full bg-sky-800 text-black">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="size-10">
+              <Image
+                className="h-10 w-10"
+                src={LOGO}
+                alt="logo"
+                width={100}
+                height={100}
+              />
+            </div>
+
+            <TrapezoidButton text="PRODUCTS" />
+            <TrapezoidButton text="WHITEPAPER" />
+          </div>
+
+          <div>
+            <ul
+              onMouseLeave={() =>
+                setPosition((pv) => ({
+                  ...pv,
+                  opacity: 0,
+                }))
+              }
+              className="w-fut relative flex items-center"
+            >
+              <Tab setPosition={setPosition}>Nexus</Tab>
+              <Tab setPosition={setPosition}>Vault</Tab>
+              <Tab setPosition={setPosition}>Prologue</Tab>
+              <Tab setPosition={setPosition}>About</Tab>
+              <Tab setPosition={setPosition}>Contact</Tab>
+
+              <Cursor position={position} />
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Navbar;
+
+function TrapezoidButton({ text }) {
+  const textRef = useRef(null);
+
+  useEffect(() => {
+    const textEl = textRef.current;
+    const handleEnter = () => {
+      gsap.fromTo(
+        textEl,
+        { y: "100%", opacity: 0 },
+        {
+          y: "0%",
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        },
+      );
+    };
+
+    const handleLeave = () => {
+      gsap.fromTo(
+        textEl,
+        {
+          y: "-100%",
+          opacity: 0,
+        },
+        {
+          y: "0%",
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        },
+      );
+    };
+
+    const parent = textEl?.parentElement;
+    parent.addEventListener("mouseenter", handleEnter);
+    parent.addEventListener("mouseleave", handleLeave);
+
+    return () => {
+      parent.removeEventListener("mouseenter", handleEnter);
+      parent.removeEventListener("mouseleave", handleLeave);
+    };
+  }, []);
+
+  return (
+    <button className="relative h-8 w-30 overflow-hidden rounded-full bg-white">
+      <span
+        ref={textRef}
+        className="absolute inset-0 flex items-center justify-center text-sm font-semibold text-black"
+      >
+        {text}
+      </span>
+    </button>
+  );
+}
+
+function Tab({ children, setPosition }) {
+  const ref = useRef(null);
+  return (
+    <li
+      onMouseEnter={() => {
+        if (!ref?.current) return;
+
+        const { width } = ref.current.getBoundingClientRect();
+
+        setPosition({
+          left: ref.current.offsetLeft,
+          width,
+          opacity: 1,
+        });
+      }}
+      className="relative z-10 block cursor-pointer px-3 py-1.5 text-sm text-white uppercase mix-blend-difference"
+      ref={ref}
+    >
+      {children}
+    </li>
+  );
+}
+
+function Cursor({ position }) {
+  return (
+    <motion.li
+      className="absolute z-0 h-8 w-26 rounded-full bg-white"
+      animate={{
+        ...position,
+      }}
+    />
+  );
+}
