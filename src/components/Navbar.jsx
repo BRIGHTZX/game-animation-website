@@ -1,15 +1,15 @@
 "use client";
 import { LOGO } from "@/constants";
-import gsap from "gsap";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import TrapezoidButton from "./Button";
 
 function Navbar() {
   const [position, setPosition] = useState({ left: 0, width: 0, opacity: 0 });
   return (
-    <div className="container">
-      <div className="fixed top-0 left-0 z-50 w-full bg-sky-800 text-black">
+    <div className="fixed top-0 left-0 z-50 w-full py-4">
+      <div className="container mx-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="size-10">
@@ -53,62 +53,6 @@ function Navbar() {
 
 export default Navbar;
 
-function TrapezoidButton({ text }) {
-  const textRef = useRef(null);
-
-  useEffect(() => {
-    const textEl = textRef.current;
-    const handleEnter = () => {
-      gsap.fromTo(
-        textEl,
-        { y: "100%", opacity: 0 },
-        {
-          y: "0%",
-          opacity: 1,
-          duration: 0.5,
-          ease: "power2.out",
-        },
-      );
-    };
-
-    const handleLeave = () => {
-      gsap.fromTo(
-        textEl,
-        {
-          y: "-100%",
-          opacity: 0,
-        },
-        {
-          y: "0%",
-          opacity: 1,
-          duration: 0.5,
-          ease: "power2.out",
-        },
-      );
-    };
-
-    const parent = textEl?.parentElement;
-    parent.addEventListener("mouseenter", handleEnter);
-    parent.addEventListener("mouseleave", handleLeave);
-
-    return () => {
-      parent.removeEventListener("mouseenter", handleEnter);
-      parent.removeEventListener("mouseleave", handleLeave);
-    };
-  }, []);
-
-  return (
-    <button className="relative h-8 w-30 overflow-hidden rounded-full bg-white">
-      <span
-        ref={textRef}
-        className="absolute inset-0 flex items-center justify-center text-sm font-semibold text-black"
-      >
-        {text}
-      </span>
-    </button>
-  );
-}
-
 function Tab({ children, setPosition }) {
   const ref = useRef(null);
   return (
@@ -124,7 +68,7 @@ function Tab({ children, setPosition }) {
           opacity: 1,
         });
       }}
-      className="relative z-10 block cursor-pointer px-3 py-1.5 text-sm text-white uppercase mix-blend-difference"
+      className="relative z-10 block cursor-pointer px-3 py-1.5 text-sm text-white uppercase transition-all duration-300 hover:text-black"
       ref={ref}
     >
       {children}

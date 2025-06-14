@@ -12,11 +12,21 @@
   --font-general: var(--font-general);
   --font-robert-medium: var(--font-robert-medium);
   --font-robert-regular: var(--font-robert-regular);
+  --font-zentry: var(--font-zentry);
 }
 
 @layer base {
   .flex-center {
     @apply flex items-center justify-center;
+  }
+
+  .hero-heading {
+    @apply font-zentry text-5xl font-black uppercase sm:right-10 sm:text-7xl md:text-9xl lg:text-[10rem];
+  }
+
+  .special-font b {
+    font-family: "Zentry";
+    font-feature-settings: "ss01" on;
   }
 }
 
@@ -30,5 +40,4 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-general);
 }

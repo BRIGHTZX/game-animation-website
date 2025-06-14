@@ -7,6 +7,7 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
+        zentry: ["var(--font-zentry)", "sans-serif"],
         circular: ["var(--font-circular)", "sans-serif"],
         general: ["var(--font-general)", "sans-serif"],
         robertMedium: ["var(--font-robert-medium)", "sans-serif"],

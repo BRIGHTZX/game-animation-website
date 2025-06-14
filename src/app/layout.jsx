@@ -6,6 +6,11 @@ const circular = localFont({
   variable: "--font-circular",
 });
 
+const zentry = localFont({
+  src: "./fonts/zentry-regular.woff2",
+  variable: "--font-zentry",
+});
+
 const general = localFont({
   src: "./fonts/general.woff2",
   variable: "--font-general",
@@ -30,7 +35,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${circular.variable} ${general.variable} ${robertMedium.variable} ${robertRegular.variable} antialiased`}
+        className={`${circular.variable} ${zentry.variable} ${general.variable} ${robertMedium.variable} ${robertRegular.variable} antialiased`}
       >
         {children}
       </body>
