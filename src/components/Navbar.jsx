@@ -2,14 +2,15 @@
 import { LOGO } from "@/constants";
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import TrapezoidButton from "./Button";
+import TrapezoidButton from "./TrapzoidButton";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 function Navbar() {
   const [position, setPosition] = useState({ left: 0, width: 0, opacity: 0 });
   return (
     <div className="fixed top-0 left-0 z-50 w-full py-4">
-      <div className="container mx-auto">
+      <div className="mx-24">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="size-10">
@@ -77,12 +78,21 @@ function Tab({ children, setPosition }) {
 }
 
 function Cursor({ position }) {
+  const liRef = useRef(null);
+
+  useGSAP(() => {
+    const liEl = liRef.current;
+    if (!liEl) return;
+
+    gsap.to(liEl, {
+      width: position.width,
+      left: position.left,
+      opacity: position.opacity,
+      duration: 0.5,
+      ease: "power2.out",
+    });
+  }, [position]);
   return (
-    <motion.li
-      className="absolute z-0 h-8 w-26 rounded-full bg-white"
-      animate={{
-        ...position,
-      }}
-    />
+    <li ref={liRef} className="absolute z-0 h-8 w-26 rounded-full bg-white" />
   );
 }

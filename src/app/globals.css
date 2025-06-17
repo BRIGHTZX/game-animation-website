@@ -21,12 +21,20 @@
   }
 
   .hero-heading {
-    @apply font-zentry text-5xl font-black uppercase sm:right-10 sm:text-7xl md:text-9xl lg:text-[10rem];
+    @apply font-zentry text-[5rem] font-black uppercase sm:right-10 sm:text-[9rem] md:text-[12rem] lg:text-[14rem];
   }
 
   .special-font b {
     font-family: "Zentry";
     font-feature-settings: "ss01" on;
+  }
+
+  .mask-clip-path {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
   }
 }
 

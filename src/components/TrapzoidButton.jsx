@@ -1,12 +1,13 @@
 "use client";
 import gsap from "gsap";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { cn } from "@/lib/utils";
+import { useGSAP } from "@gsap/react";
 
 function TrapezoidButton({ text, className }) {
   const textRef = useRef(null);
 
-  useEffect(() => {
+  useGSAP(() => {
     const textEl = textRef.current;
     const handleEnter = () => {
       gsap.fromTo(
