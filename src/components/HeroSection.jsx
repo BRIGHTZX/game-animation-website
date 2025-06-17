@@ -8,8 +8,9 @@ import { SplitText } from "gsap/SplitText";
 
 import TrapezoidButton from "./TrapzoidButton";
 import VideoPreview from "./VideoPreview";
+import TextPlugin from "gsap/TextPlugin";
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(ScrollTrigger, SplitText, TextPlugin);
 
 function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -37,6 +38,7 @@ function HeroSection() {
     setCurrentIndex(upCommingIndex);
     setIsCompletedChangeVideo(false);
     handleChangeText();
+    handleChangeTextBg();
   };
 
   const handleChangeText = () => {
@@ -73,7 +75,47 @@ function HeroSection() {
         gsap.from(split.chars, {
           x: -100,
           autoAlpha: 0,
-          stagger: 0.05,
+          stagger: 0.04,
+        });
+      },
+    });
+  };
+
+  const handleChangeTextBg = () => {
+    const prevIndex = upCommingIndex === 1 ? 4 : upCommingIndex - 1;
+    console.log(prevIndex, upCommingIndex);
+    gsap.to(`#text-content-bg-${prevIndex}`, {
+      x: 100,
+      y: 100,
+      rotate: -5,
+      scale: 0.8,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power1.inOut",
+      onComplete: () => {
+        gsap.set(`#text-content-bg-${prevIndex}`, {
+          display: "none",
+        });
+
+        gsap.set(`#text-content-bg-${upCommingIndex}`, {
+          display: "block",
+          opacity: 1,
+          x: 0,
+          y: 0,
+          rotate: 0,
+          scale: 1,
+        });
+
+        const split = SplitText.create(`#text-content-bg-${upCommingIndex}`, {
+          type: "chars",
+          charsClass: "char",
+        });
+
+        // ทำ animation แยกต่างหาก
+        gsap.from(split.chars, {
+          x: -100,
+          autoAlpha: 0,
+          stagger: 0.04,
         });
       },
     });
@@ -231,10 +273,28 @@ function HeroSection() {
 
       <div className="absolute right-24 bottom-20">
         <h1
-          id="text-content-bg"
+          id="text-content-bg-1"
           className="hero-heading special-font font-zentry! font-extrabold text-black"
         >
+          REDEFI<b>N</b>E
+        </h1>
+        <h1
+          id="text-content-bg-2"
+          className="hero-heading special-font hidden font-zentry! font-extrabold text-black"
+        >
           IDE<b>N</b>TITY
+        </h1>
+        <h1
+          id="text-content-bg-3"
+          className="hero-heading special-font hidden font-zentry! font-extrabold text-black"
+        >
+          G<b>A</b>MING
+        </h1>
+        <h1
+          id="text-content-bg-4"
+          className="hero-heading special-font hidden font-zentry! font-extrabold text-black"
+        >
+          RE<b>A</b>LITY
         </h1>
       </div>
     </div>
