@@ -229,7 +229,7 @@ function HeroSection() {
             />
           )}
         </div>
-        <div className="absolute top-20 left-24 z-50">
+        <div className="absolute top-10 left-24 z-50">
           <h1 className="hero-heading special-font font-zentry! font-extrabold text-white">
             REDEFI<b>N</b>E
           </h1>
@@ -243,7 +243,7 @@ function HeroSection() {
           </div>
         </div>
 
-        <div className="absolute right-24 bottom-20 z-50">
+        <div className="absolute right-24 -bottom-10 z-50">
           <h1
             id="text-content-1"
             className="hero-heading special-font font-zentry! font-extrabold text-white"
@@ -271,7 +271,7 @@ function HeroSection() {
         </div>
       </div>
 
-      <div className="absolute right-24 bottom-20">
+      <div className="absolute right-19 -bottom-10">
         <h1
           id="text-content-bg-1"
           className="hero-heading special-font font-zentry! font-extrabold text-black"
