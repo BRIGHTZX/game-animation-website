@@ -21,7 +21,6 @@ function HeroSection() {
   const totalVideos = 4;
   const nextVideoRef = useRef(null);
   const upCommingIndex = (currentIndex % totalVideos) + 1;
-  const currentTextRef = useRef(null);
 
   const getVideoSrc = (index) => {
     return `/videos/hero-${index}.mp4`;
@@ -33,25 +32,50 @@ function HeroSection() {
 
   const handleMiniVideoClick = () => {
     if (!isCompletedChangeVideo) return;
+
     setHasClicked(true);
     setCurrentIndex(upCommingIndex);
     setIsCompletedChangeVideo(false);
-    handleTextContent();
+    handleChangeText();
   };
 
-  const handleTextContent = () => {
-    const currentTextElement = currentTextRef.current;
-
-    // แยกข้อความเป็นบรรทัด
-    const split = SplitText.create(currentTextElement, {
-      type: "chars",
-    });
-
-    // ทำ animation แยกต่างหาก
-    gsap.from(split.chars, {
+  const handleChangeText = () => {
+    const prevIndex = upCommingIndex === 1 ? 4 : upCommingIndex - 1;
+    console.log(prevIndex, upCommingIndex);
+    gsap.to(`#text-content-${prevIndex}`, {
+      x: 100,
       y: 100,
-      autoAlpha: 0,
-      stagger: 0.05,
+      rotate: -5,
+      scale: 0.8,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power1.inOut",
+      onComplete: () => {
+        gsap.set(`#text-content-${prevIndex}`, {
+          display: "none",
+        });
+
+        gsap.set(`#text-content-${upCommingIndex}`, {
+          display: "block",
+          opacity: 1,
+          x: 0,
+          y: 0,
+          rotate: 0,
+          scale: 1,
+        });
+
+        const split = SplitText.create(`#text-content-${upCommingIndex}`, {
+          type: "chars",
+          charsClass: "char",
+        });
+
+        // ทำ animation แยกต่างหาก
+        gsap.from(split.chars, {
+          x: -100,
+          autoAlpha: 0,
+          stagger: 0.05,
+        });
+      },
     });
   };
 
@@ -86,7 +110,7 @@ function HeroSection() {
         });
       }
     },
-    { dependencies: [currentIndex], reupCommingIndex: true },
+    { dependencies: [currentIndex], revertOnUpdate: true },
   );
 
   useGSAP(() => {
@@ -179,11 +203,28 @@ function HeroSection() {
 
         <div className="absolute right-24 bottom-20 z-50">
           <h1
-            ref={currentTextRef}
-            id="text-content"
+            id="text-content-1"
             className="hero-heading special-font font-zentry! font-extrabold text-white"
           >
             REDEFI<b>N</b>E
+          </h1>
+          <h1
+            id="text-content-2"
+            className="hero-heading special-font hidden font-zentry! font-extrabold text-white"
+          >
+            IDE<b>N</b>TITY
+          </h1>
+          <h1
+            id="text-content-3"
+            className="hero-heading special-font hidden font-zentry! font-extrabold text-white"
+          >
+            G<b>A</b>MING
+          </h1>
+          <h1
+            id="text-content-4"
+            className="hero-heading special-font hidden font-zentry! font-extrabold text-white"
+          >
+            RE<b>A</b>LITY
           </h1>
         </div>
       </div>
