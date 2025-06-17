@@ -9,7 +9,7 @@ export default function Home() {
     <main className="relative min-h-screen w-screen overflow-x-hidden">
       <Navbar />
       <HeroSection />
-      <div className="h-screen w-screen bg-black" />
+      <div className="h-screen w-screen overflow-x-hidden bg-black" />
     </main>
   );
 }
