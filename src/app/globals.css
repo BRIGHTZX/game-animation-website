@@ -36,6 +36,11 @@
   .absolute-center {
     @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
   }
+  .char-current,
+  .char-next {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

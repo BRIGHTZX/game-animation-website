@@ -1,22 +1,27 @@
 "use client";
-import TrapezoidButton from "./TrapzoidButton";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
-import VideoPreview from "./VideoPreview";
 import { useEffect, useRef, useState } from "react";
 
-gsap.registerPlugin(ScrollTrigger);
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "gsap/SplitText";
+
+import TrapezoidButton from "./TrapzoidButton";
+import VideoPreview from "./VideoPreview";
+
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 function HeroSection() {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [hasClicked, setHasClicked] = useState(false);
   const [loadedVideos, setLoadedVideos] = useState(0);
+  const [isCompletedChangeVideo, setIsCompletedChangeVideo] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
   const totalVideos = 4;
   const nextVideoRef = useRef(null);
   const upCommingIndex = (currentIndex % totalVideos) + 1;
+  const currentTextRef = useRef(null);
 
   const getVideoSrc = (index) => {
     return `/videos/hero-${index}.mp4`;
@@ -27,8 +32,27 @@ function HeroSection() {
   };
 
   const handleMiniVideoClick = () => {
+    if (!isCompletedChangeVideo) return;
     setHasClicked(true);
     setCurrentIndex(upCommingIndex);
+    setIsCompletedChangeVideo(false);
+    handleTextContent();
+  };
+
+  const handleTextContent = () => {
+    const currentTextElement = currentTextRef.current;
+
+    // แยกข้อความเป็นบรรทัด
+    const split = SplitText.create(currentTextElement, {
+      type: "chars",
+    });
+
+    // ทำ animation แยกต่างหาก
+    gsap.from(split.chars, {
+      y: 100,
+      autoAlpha: 0,
+      stagger: 0.05,
+    });
   };
 
   useEffect(() => {
@@ -40,6 +64,7 @@ function HeroSection() {
   useGSAP(
     () => {
       if (hasClicked) {
+        setIsCompletedChangeVideo(false);
         gsap.set("#next-video", { visibility: "visible" });
 
         gsap.to("#next-video", {
@@ -50,6 +75,7 @@ function HeroSection() {
           duration: 1,
           ease: "power1.inOut",
           onStart: () => nextVideoRef.current.play(),
+          onComplete: () => setIsCompletedChangeVideo(true),
         });
 
         gsap.from("#current-video", {
@@ -60,7 +86,7 @@ function HeroSection() {
         });
       }
     },
-    { dependencies: [currentIndex], revertOnUpdate: true },
+    { dependencies: [currentIndex], reupCommingIndex: true },
   );
 
   useGSAP(() => {
@@ -88,14 +114,13 @@ function HeroSection() {
         className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-50"
       >
         <div>
-          <div className="mask-clip-path absolute-center z-50 size-64 cursor-pointer rounded-lg">
-            <VideoPreview>
+          <div className="absolute-center z-50 size-64 cursor-pointer rounded-lg">
+            <VideoPreview isChangeVideo={isCompletedChangeVideo}>
               <div
                 onClick={handleMiniVideoClick}
-                className="size-64 origin-center border opacity-0 transition-all duration-500 ease-in hover:opacity-100"
+                className="size-64 origin-center opacity-0 transition-all duration-500 ease-in hover:opacity-100"
               >
                 <video
-                  ref={nextVideoRef}
                   id="current-video"
                   src={getVideoSrc((currentIndex % totalVideos) + 1)}
                   muted
@@ -153,14 +178,21 @@ function HeroSection() {
         </div>
 
         <div className="absolute right-24 bottom-20 z-50">
-          <h1 className="hero-heading special-font font-zentry! font-extrabold text-white">
-            IDE<b>N</b>TITY
+          <h1
+            ref={currentTextRef}
+            id="text-content"
+            className="hero-heading special-font font-zentry! font-extrabold text-white"
+          >
+            REDEFI<b>N</b>E
           </h1>
         </div>
       </div>
 
       <div className="absolute right-24 bottom-20">
-        <h1 className="hero-heading special-font font-zentry! font-extrabold text-black">
+        <h1
+          id="text-content-bg"
+          className="hero-heading special-font font-zentry! font-extrabold text-black"
+        >
           IDE<b>N</b>TITY
         </h1>
       </div>

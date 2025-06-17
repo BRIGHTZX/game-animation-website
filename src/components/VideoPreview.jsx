@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
 
-function VideoPreview({ children }) {
+function VideoPreview({ children, isChangeVideo }) {
   const sectionRef = useRef(null);
   const divRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
@@ -57,7 +57,9 @@ function VideoPreview({ children }) {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
-      className="absolute z-50 size-full overflow-hidden rounded-lg"
+      className={`absolute z-50 size-full overflow-hidden rounded-lg ${
+        isChangeVideo ? "hover:border-2 hover:border-black" : ""
+      }`}
       style={{
         perspective: "500px",
       }}
