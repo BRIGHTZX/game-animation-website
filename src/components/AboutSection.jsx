@@ -4,6 +4,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import TextPlugin from "gsap/TextPlugin";
 import Image from "next/image";
+import RoundedCorners from "./RoundedCorners";
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin, SplitText);
 
@@ -158,35 +159,38 @@ function AboutSection() {
           id="clip"
           className="relative h-dvh w-screen border border-red-500"
         >
-          <div className="about-image-clip-path absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
-            <Image
-              src="/img/about.webp"
-              alt="about-section-1"
-              className="h-full w-full object-cover"
-              fill
-            />
-          </div>
-          <div
-            id="stones"
-            className="absolute top-1/2 left-1/2 z-20 h-full w-full -translate-x-1/2 -translate-y-1/2"
-          >
-            <div className="shadow-lg">
+          <div className="about-img-container">
+            <div className="about-image-clip-path absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
               <Image
-                src="/img/stones.webp"
-                alt="stones"
+                src="/img/about.webp"
+                alt="about-section-1"
                 className="h-full w-full object-cover"
                 fill
               />
+              <RoundedCorners />
             </div>
-          </div>
-          <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-black">
-            <h1 className="text-center font-robert-medium text-2xl">
-              The Metagame begins-your life, now an epic MMORPG
-            </h1>
-            <p className="text-center font-robert-regular text-xl leading-6 text-zinc-600">
-              Zentry is the unified play layer driving attention and <br />
-              contribution through croos-world AI gamification
-            </p>
+            <div
+              id="stones"
+              className="absolute top-1/2 left-1/2 z-20 h-full w-full -translate-x-1/2 -translate-y-1/2"
+            >
+              <div className="shadow-lg">
+                <Image
+                  src="/img/stones.webp"
+                  alt="stones"
+                  className="h-full w-full object-cover"
+                  fill
+                />
+              </div>
+            </div>
+            <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-black">
+              <h1 className="text-center font-robert-medium text-2xl">
+                The Metagame begins-your life, now an epic MMORPG
+              </h1>
+              <p className="text-center font-robert-regular text-xl leading-6 text-zinc-600">
+                Zentry is the unified play layer driving attention and <br />
+                contribution through croos-world AI gamification
+              </p>
+            </div>
           </div>
         </div>
       </div>
