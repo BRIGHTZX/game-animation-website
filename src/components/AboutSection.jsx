@@ -5,10 +5,16 @@ import { SplitText } from "gsap/SplitText";
 import TextPlugin from "gsap/TextPlugin";
 import Image from "next/image";
 import RoundedCorners from "./RoundedCorners";
+import { useRef, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin, SplitText);
 
 function AboutSection() {
+  const imageSectionRef = useRef(null);
+  const clipRef = useRef(null);
+  const [isHovering, setIsHovering] = useState(false);
+  const [isAnimate, setIsAnimate] = useState(false);
+
   useGSAP(() => {
     const lineSplit = SplitText.create("#about-header-line", {
       type: "lines",
@@ -92,6 +98,9 @@ function AboutSection() {
         scrub: true,
         pin: true,
         pinSpacing: true,
+        onEnter: () => {
+          setIsAnimate(true);
+        },
       },
     });
 
@@ -117,26 +126,57 @@ function AboutSection() {
         gsap.to("#about-section", {
           backgroundColor: "#000",
         });
+        setIsAnimate(true);
+      },
+      onReverseComplete: () => {
+        setIsAnimate(false);
       },
     });
   });
 
   useGSAP(() => {
     gsap.set("#stones", {
-      scale: 1,
+      scale: 0.5,
     });
 
     gsap.to("#stones", {
-      scale: 1.5,
+      scale: 1.35,
+      duration: 1,
+      ease: "power1.out",
     });
   });
+
+  // HOVER ANIMATION
+  const handleMouseMove = ({ clientX, clientY, currentTarget }) => {
+    console.log(isAnimate, isHovering);
+    if (isAnimate) {
+      return gsap.to(clipRef.current, {
+        rotationY: 0,
+        rotationX: 0,
+      });
+    }
+    const rect = currentTarget.getBoundingClientRect();
+
+    const xOffset = clientX - (rect.left + rect.width / 2);
+    const yOffset = clientY - (rect.top + rect.height / 2);
+
+    if (isHovering) {
+      gsap.to(clipRef.current, {
+        rotationY: xOffset / 150,
+        rotationX: -yOffset / 150,
+        transformPerspective: 500,
+        duration: 1,
+        ease: "power1.out",
+      });
+    }
+  };
 
   return (
     <div
       id="about-section"
-      className="relative min-h-screen w-[100vdw] overflow-x-hidden bg-[#DFDFF2] pt-40"
+      className="relative min-h-screen w-screen overflow-hidden bg-[#DFDFF2] pt-40"
     >
-      <div>
+      <div className="mb-16">
         <p className="text-center font-robert-medium text-xs font-bold text-black uppercase">
           Welcome To Zentry
         </p>
@@ -154,44 +194,48 @@ function AboutSection() {
         </h1>
       </div>
 
-      <div className="relative mx-auto">
+      <div
+        ref={imageSectionRef}
+        style={{ perspective: "1000px" }}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        id="clip"
+        className="relative h-dvh w-screen overflow-hidden"
+      >
         <div
-          id="clip"
-          className="relative h-dvh w-screen border border-red-500"
+          ref={clipRef}
+          style={{ transformStyle: "preserve-3d" }}
+          className="rounded-container z-20"
         >
-          <div className="about-img-container">
-            <div className="about-image-clip-path absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
+          <div className="about-image-clip-path absolute-center">
+            <Image
+              src="/img/about.webp"
+              alt="about-section-1"
+              className="h-full w-full object-cover"
+              fill
+            />
+            <RoundedCorners />
+          </div>
+          <div id="stones" className="absolute-center z-20 h-full w-full">
+            <div className="shadow-lg">
               <Image
-                src="/img/about.webp"
-                alt="about-section-1"
+                src="/img/stones.webp"
+                alt="stones"
                 className="h-full w-full object-cover"
                 fill
               />
-              <RoundedCorners />
-            </div>
-            <div
-              id="stones"
-              className="absolute top-1/2 left-1/2 z-20 h-full w-full -translate-x-1/2 -translate-y-1/2"
-            >
-              <div className="shadow-lg">
-                <Image
-                  src="/img/stones.webp"
-                  alt="stones"
-                  className="h-full w-full object-cover"
-                  fill
-                />
-              </div>
-            </div>
-            <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-black">
-              <h1 className="text-center font-robert-medium text-2xl">
-                The Metagame begins-your life, now an epic MMORPG
-              </h1>
-              <p className="text-center font-robert-regular text-xl leading-6 text-zinc-600">
-                Zentry is the unified play layer driving attention and <br />
-                contribution through croos-world AI gamification
-              </p>
             </div>
           </div>
+        </div>
+        <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-black">
+          <h1 className="text-center font-robert-medium text-2xl">
+            The Metagame begins-your life, now an epic MMORPG
+          </h1>
+          <p className="text-center font-robert-regular text-xl leading-6 text-zinc-600">
+            Zentry is the unified play layer driving attention and <br />
+            contribution through croos-world AI gamification
+          </p>
         </div>
       </div>
     </div>
