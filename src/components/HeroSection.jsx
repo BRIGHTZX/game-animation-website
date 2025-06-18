@@ -174,10 +174,10 @@ function HeroSection() {
   }, []);
 
   return (
-    <div className="relative h-screen w-screen overflow-x-hidden bg-white">
+    <div className="relative h-screen w-screen overflow-x-hidden bg-[#DFDFF2]">
       <div
         id="video-frame"
-        className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-50"
+        className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg"
       >
         <div>
           <div className="absolute-center z-50 size-64 cursor-pointer rounded-lg">
