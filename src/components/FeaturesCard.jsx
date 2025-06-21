@@ -39,7 +39,6 @@ function FeaturesCard({
         start: start,
         end: end,
         toggleActions: "play none play reverse",
-        markers: true,
       },
     });
   }, []);

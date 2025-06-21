@@ -6,6 +6,7 @@ import TextPlugin from "gsap/TextPlugin";
 import Image from "next/image";
 import RoundedCorners from "./RoundedCorners";
 import { useRef, useState } from "react";
+import TextAnimation from "./TextAnimation";
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin, SplitText);
 
@@ -148,7 +149,6 @@ function AboutSection() {
 
   // HOVER ANIMATION
   const handleMouseMove = ({ clientX, clientY, currentTarget }) => {
-    console.log(isAnimate, isHovering);
     if (isAnimate) {
       return gsap.to(clipRef.current, {
         rotationY: 0,
@@ -180,18 +180,18 @@ function AboutSection() {
         <p className="text-center font-robert-medium text-xs font-bold text-black uppercase">
           Welcome To Zentry
         </p>
-        <h1
-          id="about-header-line"
-          className="special-font mt-10 text-center font-zentry text-[7rem] text-nowrap text-black uppercase opacity-1"
-        >
-          Disc<b>o</b>ver The World&apos;s
-        </h1>
-        <h1
-          id="about-header-word"
-          className="special-font mt-10 text-center font-zentry text-[7rem] leading-0.5 text-nowrap text-black uppercase opacity-1"
-        >
+        <TextAnimation
+          lineId="about-header-line"
+          wordId="about-header-word"
+          wordText={
+            <>
+              Disc<b>o</b>ver The World&apos;s
+            </>
+          }
+          lineText="
           Largest Shared Adventure
-        </h1>
+"
+        />
       </div>
 
       <div
