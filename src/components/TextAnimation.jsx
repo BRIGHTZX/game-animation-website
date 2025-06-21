@@ -72,7 +72,6 @@ function TextAnimation({
         start: "top 90%",
         end: "bottom 60%",
         scrub: true,
-        markers: true,
       },
     });
 

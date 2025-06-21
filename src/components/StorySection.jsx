@@ -4,10 +4,38 @@ import TrapezoidButton from "./TrapzoidButton";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap/all";
 import TextAnimation from "./TextAnimation";
+import { useGSAP } from "@gsap/react";
 
 function StorySection() {
+  const sectionRef = useRef(null);
   const storyImgRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
+
+  useGSAP(() => {
+    if (!storyImgRef.current) return;
+    gsap.fromTo(
+      storyImgRef.current,
+      {
+        rotateX: -90,
+        rotateY: -30,
+        opacity: 0,
+      },
+      {
+        duration: 3,
+        rotateX: 0,
+        rotateY: 0,
+        opacity: 1,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "20% 90%",
+          end: "50% center",
+          toggleActions: "play none play reverse",
+          markers: true,
+        },
+      },
+    );
+  }, []);
 
   const handleMouseMove = ({ clientX, clientY, currentTarget }) => {
     const rect = currentTarget.getBoundingClientRect();
@@ -41,7 +69,10 @@ function StorySection() {
     }
   }, [isHovering]);
   return (
-    <div className="relative h-[120dvh] w-screen bg-black">
+    <section
+      ref={sectionRef}
+      className="relative h-[110dvh] w-screen overflow-hidden bg-black"
+    >
       <div className="absolute top-80 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="z-10 flex flex-col items-center justify-center">
           <p className="mb-10 font-robert-medium text-xs font-semibold uppercase">
@@ -68,7 +99,7 @@ function StorySection() {
 
       <div
         style={{ perspective: "1000px" }}
-        className="rounded-container absolute top-[61%] left-[45%] z-20 size-full h-[60%] w-[65%] -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
+        className="rounded-container absolute top-[70%] left-[45%] z-20 size-full h-[60%] w-[65%] -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
       >
         <div
           onMouseMove={handleMouseMove}
@@ -84,6 +115,7 @@ function StorySection() {
             className="size-full object-cover"
             width={1000}
             height={1000}
+            priority
           />
         </div>
       </div>
@@ -99,7 +131,7 @@ function StorySection() {
           onClick={() => {}}
         />
       </div>
-    </div>
+    </section>
   );
 }
 
