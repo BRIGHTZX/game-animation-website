@@ -58,7 +58,6 @@ function PoweredBySection() {
         trigger: powerBySectionRef.current,
         start: "top top",
         end: "+=2500", // ระยะ scroll
-        markers: true,
         scrub: true,
         pin: true,
         pinSpacing: true,
@@ -182,16 +181,14 @@ function PoweredBySection() {
       className="relative h-[100dvh] w-screen overflow-x-hidden bg-black"
     >
       <TextLeftAnimation
-        lineId="powered-by-header-line"
-        wordId="powered-by-header-word"
-        lineText={
+        charId="powered-by-header-char"
+        charText={
           <>
-            The Univ<b>e</b>rse
+            The Univ<b>e</b>rse <br />
+            Powered By Z<b>e</b>nt
           </>
         }
-        wordText={<>Powered by Zent</>}
-        lineClass="text-black"
-        wordClass="text-black"
+        charClass="text-black"
       />
 
       <div className="mt-10 px-20">

@@ -44,9 +44,7 @@ function TextAnimation({
       rotationX: -30,
       rotationY: -30,
       autoAlpha: 0,
-      stagger: {
-        amount: 0.5,
-      },
+      stagger: 0.05,
       duration: 0.5,
       ease: "power1.out",
       scrollTrigger: {

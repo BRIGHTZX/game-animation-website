@@ -7,101 +7,52 @@ import TextPlugin from "gsap/TextPlugin";
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin, SplitText);
 
-function TextLeftAnimation({
-  wordText,
-  lineText,
-  lineId,
-  wordId,
-  lineClass,
-  wordClass,
-}) {
+function TextLeftAnimation({ charText, charId, charClass }) {
   useGSAP(() => {
-    const lineSplit = SplitText.create(`#${lineId}`, {
-      type: "lines",
-      linesClass: "line",
+    const charSplit = SplitText.create(`#${charId}`, {
+      type: "chars",
+      wordsClass: "char",
     });
 
-    const wordSplit = SplitText.create(`#${wordId}`, {
-      type: "words",
-      wordsClass: "word",
-    });
-
-    gsap.set(`#${lineId}`, {
-      perspective: 800,
+    gsap.set(`#${charId}`, {
       xPercent: 5,
+      yPercent: 10,
       scale: 1,
       opacity: 1,
     });
-
-    gsap.set(`#${wordId}`, {
-      xPercent: 5,
-      perspective: 800,
-      opacity: 1,
-    });
-
-    gsap.from(lineSplit.lines, {
-      x: -500,
-      z: -100,
-      y: 100,
-      rotationX: -30,
-      rotationY: -30,
-      autoAlpha: 0,
-      stagger: {
-        amount: 0.1,
-      },
-      duration: 0.5,
-      ease: "power1.out",
-      scrollTrigger: {
-        trigger: `#${lineId}`,
-        start: "top 90%",
-        end: "bottom 55%",
-        toggleActions: "play none play reverse",
-      },
-    }); // เริ่มซ้อนกับท้าย
 
     // ✅ Animate wordSplit (บรรทัดสอง) — ทีละคำ แบบเรียง
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: `#${wordId}`,
-        start: "top 90%",
-        end: "bottom 60%",
+        trigger: `#${charId}`,
+        start: "top 80%",
+        end: "bottom 40%",
         toggleActions: "play none play reverse",
+        markers: true,
       },
     });
 
-    tl.from(wordSplit.words, {
+    tl.from(charSplit.chars, {
       x: -500,
-      z: -100,
-      y: 100,
-      rotationX: -30,
-      rotationY: -30,
+      y: 200,
       autoAlpha: 0,
       scale: 1,
-      stagger: 0.3,
+      stagger: 0.02,
       duration: 0.5,
       ease: "power1.out",
     });
   }, []);
 
   return (
-    <div>
+    <div className="relative">
       <h1
-        id={lineId}
+        id={charId}
         className={cn(
-          "special-font mt-10 font-zentry text-[7rem] text-nowrap text-black uppercase opacity-1",
-          lineClass,
+          "special-font mt-10 font-zentry text-[7rem] leading-[7rem] text-nowrap text-black uppercase opacity-1",
+          charClass,
         )}
       >
-        {lineText}
-      </h1>
-      <h1
-        id={wordId}
-        className={cn(
-          "special-font mt-10 font-zentry text-[7rem] leading-0.5 text-nowrap text-black uppercase opacity-1",
-          wordClass,
-        )}
-      >
-        {wordText}
+        {charText}
       </h1>
     </div>
   );
