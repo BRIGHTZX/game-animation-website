@@ -239,7 +239,11 @@ function HeroSection() {
           </p>
 
           <div className="mt-4">
-            <TrapezoidButton text="Watch Tailer" className="bg-yellow-200" />
+            <TrapezoidButton
+              text="Watch Tailer"
+              btnClass="bg-yellow-200"
+              textClass="text-black"
+            />
           </div>
         </div>
 

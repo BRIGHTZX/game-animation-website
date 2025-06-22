@@ -1,15 +1,41 @@
 "use client";
 import { LOGO } from "@/constants";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TrapezoidButton from "./TrapzoidButton";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { cn } from "@/lib/utils";
 
 function Navbar() {
+  const navbarRef = useRef(null);
   const [position, setPosition] = useState({ left: 0, width: 0, opacity: 0 });
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      setIsScrolling(currentScrollY > lastScrollY);
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
   return (
-    <div className="fixed top-0 left-0 z-50 w-full py-4">
+    <div
+      ref={navbarRef}
+      className={cn(
+        "fixed z-50 py-4 transition-all duration-500",
+        lastScrollY === 0 && !isScrolling
+          ? "top-0 left-0 w-full"
+          : lastScrollY > 0 && isScrolling
+            ? "-top-1/2 left-1/2 mx-auto w-[98%] -translate-x-1/2 rounded-lg bg-black"
+            : "top-4 left-1/2 mx-auto w-[98%] -translate-x-1/2 rounded-lg border border-[#2D2D30] bg-black",
+      )}
+    >
       <div className="mx-24">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
@@ -23,8 +49,8 @@ function Navbar() {
               />
             </div>
 
-            <TrapezoidButton text="PRODUCTS" />
-            <TrapezoidButton text="WHITEPAPER" />
+            <TrapezoidButton text="PRODUCTS" textClass="text-black" />
+            <TrapezoidButton text="WHITEPAPER" textClass="text-black" />
           </div>
 
           <div>
