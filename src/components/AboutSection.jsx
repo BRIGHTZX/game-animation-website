@@ -17,80 +17,6 @@ function AboutSection() {
   const [isAnimate, setIsAnimate] = useState(false);
 
   useGSAP(() => {
-    const lineSplit = SplitText.create("#about-header-line", {
-      type: "lines",
-      linesClass: "line",
-    });
-
-    const wordSplit = SplitText.create("#about-header-word", {
-      type: "words",
-      wordsClass: "word",
-    });
-
-    gsap.set("#about-header-line", {
-      perspective: 800,
-      scale: 1,
-      opacity: 1,
-    });
-
-    gsap.set("#about-header-word", {
-      perspective: 800,
-      opacity: 1,
-    });
-
-    gsap.from(lineSplit.lines, {
-      x: -500,
-      z: -100,
-      y: 100,
-      rotationX: -30,
-      rotationY: -30,
-      autoAlpha: 0,
-      stagger: {
-        amount: 0.5,
-      },
-      duration: 2,
-      ease: "power1.out",
-      scrollTrigger: {
-        trigger: "#about-header-line",
-        start: "top 90%",
-        end: "bottom 55%",
-        scrub: true,
-        onEnterE: () => {
-          gsap.to(lineSplit.lines, {
-            x: -500,
-            y: -200,
-            duration: 1,
-            ease: "power1.out",
-          });
-        },
-      },
-    }); // เริ่มซ้อนกับท้าย
-
-    // ✅ Animate wordSplit (บรรทัดสอง) — ทีละคำ แบบเรียง
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "#about-header-word",
-        start: "top 90%",
-        end: "bottom 60%",
-        scrub: true,
-      },
-    });
-
-    tl.from(wordSplit.words, {
-      x: -500,
-      z: -100,
-      y: 100,
-      rotationX: -30,
-      rotationY: -30,
-      autoAlpha: 0,
-      scale: 1,
-      stagger: 0.3,
-      duration: 2,
-      ease: "power1.out",
-    });
-  }, []);
-
-  useGSAP(() => {
     const clipAnimation = gsap.timeline({
       scrollTrigger: {
         trigger: "#clip",
@@ -206,24 +132,29 @@ function AboutSection() {
         <div
           ref={clipRef}
           style={{ transformStyle: "preserve-3d" }}
-          className="rounded-container z-20"
+          className="rounded-container"
         >
           <div className="about-image-clip-path absolute-center">
             <Image
               src="/img/about.webp"
               alt="about-section-1"
               className="h-full w-full object-cover"
-              fill
+              width={1000}
+              height={1000}
             />
             <RoundedCorners />
           </div>
-          <div id="stones" className="absolute-center z-20 h-full w-full">
-            <div className="shadow-lg">
+          <div
+            id="stones"
+            className="absolute top-1/2 left-1/2 z-20 h-full w-full -translate-x-1/2 -translate-y-1/2"
+          >
+            <div className="h-full w-full shadow-lg">
               <Image
                 src="/img/stones.webp"
                 alt="stones"
                 className="h-full w-full object-cover"
-                fill
+                width={1000}
+                height={1000}
               />
             </div>
           </div>

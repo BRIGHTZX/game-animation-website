@@ -47,23 +47,15 @@ function TextLeftAnimation({
       rotationY: -30,
       autoAlpha: 0,
       stagger: {
-        amount: 0.5,
+        amount: 0.1,
       },
-      duration: 2,
+      duration: 0.5,
       ease: "power1.out",
       scrollTrigger: {
         trigger: `#${lineId}`,
         start: "top 90%",
         end: "bottom 55%",
-        scrub: true,
-        onEnterE: () => {
-          gsap.to(lineSplit.lines, {
-            x: -500,
-            y: -200,
-            duration: 1,
-            ease: "power1.out",
-          });
-        },
+        toggleActions: "play none play reverse",
       },
     }); // เริ่มซ้อนกับท้าย
 
@@ -73,7 +65,7 @@ function TextLeftAnimation({
         trigger: `#${wordId}`,
         start: "top 90%",
         end: "bottom 60%",
-        scrub: true,
+        toggleActions: "play none play reverse",
       },
     });
 
@@ -86,7 +78,7 @@ function TextLeftAnimation({
       autoAlpha: 0,
       scale: 1,
       stagger: 0.3,
-      duration: 2,
+      duration: 0.5,
       ease: "power1.out",
     });
   }, []);
