@@ -17,6 +17,26 @@ function AboutSection() {
   const [isAnimate, setIsAnimate] = useState(false);
 
   useGSAP(() => {
+    gsap.fromTo(
+      clipRef.current,
+      {
+        y: 500,
+        rotateX: -90,
+      },
+      {
+        y: 0,
+        rotateX: 0,
+        duration: 1,
+        transformPerspective: 2000,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: imageSectionRef.current,
+          start: "20% 80%",
+          end: "bottom 40%",
+          toggleActions: "play none play reverse",
+        },
+      },
+    );
     const clipAnimation = gsap.timeline({
       scrollTrigger: {
         trigger: "#clip",

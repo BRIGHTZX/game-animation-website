@@ -1,5 +1,6 @@
 "use client";
 import AboutSection from "@/components/AboutSection";
+import CardSection from "@/components/CardSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
@@ -19,6 +20,7 @@ export default function Home() {
       <StorySection />
       <PoweredBySection />
       <WhoWeAreSection />
+      <CardSection />
     </main>
   );
 }

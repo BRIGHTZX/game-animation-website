@@ -9,9 +9,8 @@ gsap.registerPlugin(ScrollTrigger, TextPlugin, SplitText);
 
 function TextLeftAnimation({ charText, charId, charClass }) {
   useGSAP(() => {
-    const charSplit = SplitText.create(`#${charId}`, {
-      type: "chars",
-      wordsClass: "char",
+    const wordSplit = SplitText.create(`#${charId}`, {
+      type: "words",
     });
 
     gsap.set(`#${charId}`, {
@@ -28,17 +27,16 @@ function TextLeftAnimation({ charText, charId, charClass }) {
         start: "top 80%",
         end: "bottom 40%",
         toggleActions: "play none play reverse",
-        markers: true,
       },
     });
 
-    tl.from(charSplit.chars, {
-      x: -500,
-      y: 200,
+    tl.from(wordSplit.words, {
+      x: -50,
+      y: 20,
       autoAlpha: 0,
       scale: 1,
-      stagger: 0.02,
-      duration: 0.5,
+      stagger: 0.08,
+      duration: 0.1,
       ease: "power1.out",
     });
   }, []);

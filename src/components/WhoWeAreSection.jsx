@@ -12,9 +12,30 @@ function WhoWeAreSection() {
   const container2Ref = useRef(null);
   const container3Ref = useRef(null);
   const sectionRef = useRef(null);
+  const textContainerRef = useRef(null);
   const textRef = useRef(null);
 
   useGSAP(() => {
+    gsap.fromTo(
+      textContainerRef.current,
+      {
+        rotateX: -30,
+        rotateY: -80,
+      },
+      {
+        rotateX: 0,
+        rotateY: 0,
+        duration: 1.5,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "20% 90%",
+          end: "center 85%",
+          toggleActions: "play none play reverse",
+        },
+      },
+    );
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -63,111 +84,109 @@ function WhoWeAreSection() {
     tl.fromTo(
       text.words,
       {
-        x: -200,
-        y: 200,
-        z: -100,
-        rotateX: -60,
-        rotateY: 60,
+        x: -100,
         opacity: 0,
       },
       {
         x: 0,
-        y: 0,
-        z: 0,
-        rotateX: 0,
-        rotateY: 0,
         opacity: 1,
-        duration: 1,
+        duration: 0.1,
         ease: "power2.inOut",
-        stagger: 0.01,
+        stagger: 0.05,
       },
     );
   }, []);
   return (
     <section
       ref={sectionRef}
-      style={{
-        perspective: "1000px",
-      }}
-      className="relative h-[100dvh] w-screen overflow-x-hidden bg-[#DFDFF2]"
+      className="relative h-[160dvh] w-screen overflow-x-hidden bg-[#DFDFF2]"
     >
       <div
         style={{
-          transformStyle: "preserve-3d",
+          perspective: "1000px",
         }}
-        className="absolute-center flex flex-col items-center justify-center"
+        className="size-full overflow-x-hidden"
       >
-        <p className="font-robert-medium text-xs text-black">WHO WE ARE</p>
+        <div
+          ref={textContainerRef}
+          style={{
+            transformStyle: "preserve-3d",
+          }}
+          className="size-full overflow-x-hidden"
+        >
+          <div className="absolute-center flex flex-col items-center justify-center">
+            <p className="font-robert-medium text-xs text-black">WHO WE ARE</p>
+            <div className="relative mt-10">
+              <div
+                ref={textRef}
+                className="special-font flex flex-col items-center text-center font-zentry text-[6rem] leading-[8rem] text-nowrap text-black"
+              >
+                <div>
+                  We&apos;re B<b>uilding</b>
+                </div>
+                <div className="relative flex items-center justify-between gap-4">
+                  A NEW
+                  <ImagePreview
+                    containerRef={container1Ref}
+                    imgSrc="/img/about-entry-1.webp"
+                    durationTime={1.2}
+                  />
+                  <span>
+                    Realit
+                    <b>Y</b>
+                  </span>
+                </div>
+                <div>
+                  That ReW<b>a</b>rds
+                </div>
+                <div className="flex items-center justify-between gap-4">
+                  <span>
+                    Play<b className="m-0 p-0">e</b>rs
+                  </span>
+                  <ImagePreview
+                    containerRef={container2Ref}
+                    imgSrc="/img/about-entry-2.webp"
+                    durationTime={1}
+                  />
+                  <span>and</span>
+                </div>
+                <div>
+                  E<b>m</b>Powers
+                </div>
+                <div>
+                  Hu<b>m</b>ans & AI
+                </div>
+                <div className="flex items-center justify-between gap-4">
+                  To
+                  <ImagePreview
+                    containerRef={container3Ref}
+                    imgSrc="/img/about-entry-3.webp"
+                    durationTime={0.9}
+                  />
+                  <span>
+                    Thri
+                    <b>v</b>e
+                  </span>
+                </div>
+              </div>
+            </div>
 
-        <div className="relative mt-10">
-          <div
-            ref={textRef}
-            className="special-font flex flex-col items-center text-center font-zentry text-[7rem] leading-[8rem] text-nowrap text-black"
-          >
-            <div>
-              We&apos;re B<b>uilding</b>
+            <div className="mt-10">
+              <p className="mx-auto w-[60%] text-center font-robert-medium text-xl text-black">
+                Zentry envisions a future where players, emerging tech, and a
+                new economy unite at the convergence of gaming and AI.
+              </p>
             </div>
-            <div className="relative flex items-center justify-between gap-4">
-              A NEW
-              <ImagePreview
-                containerRef={container1Ref}
-                imgSrc="/img/about-entry-1.webp"
-                durationTime={1.2}
+
+            <div className="mt-10">
+              <TrapezoidButton
+                text="DISCOVER WHO WE ARE"
+                textClass="
+          text-blue-50 text-lg text-nowrap"
+                btnClass="bg-black py-6 px-32"
               />
-              <span>
-                Realit
-                <b>Y</b>
-              </span>
-            </div>
-            <div>
-              That ReW<b>a</b>rds
-            </div>
-            <div className="flex items-center justify-between gap-4">
-              <span>
-                Play<b className="m-0 p-0">e</b>rs
-              </span>
-              <ImagePreview
-                containerRef={container2Ref}
-                imgSrc="/img/about-entry-2.webp"
-                durationTime={1}
-              />
-              <span>and</span>
-            </div>
-            <div>
-              E<b>m</b>Powers
-            </div>
-            <div>
-              Hu<b>m</b>ans & AI
-            </div>
-            <div className="flex items-center justify-between gap-4">
-              To
-              <ImagePreview
-                containerRef={container3Ref}
-                imgSrc="/img/about-entry-3.webp"
-                durationTime={0.9}
-              />
-              <span>
-                Thri
-                <b>v</b>e
-              </span>
             </div>
           </div>
-        </div>
-
-        <div className="mt-10">
-          <p className="mx-auto w-[60%] text-center font-robert-medium text-xl text-black">
-            Zentry envisions a future where players, emerging tech, and a new
-            economy unite at the convergence of gaming and AI.
-          </p>
-        </div>
-
-        <div className="mt-10">
-          <TrapezoidButton
-            text="DISCOVER WHO WE ARE"
-            textClass="
-          text-blue-50 text-lg text-nowrap"
-            btnClass="bg-black py-6 px-32"
-          />
         </div>
       </div>
     </section>
