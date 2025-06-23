@@ -32,8 +32,8 @@ function PoweredBySection() {
 
     ScrollTrigger.create({
       trigger: powerBySectionRef.current,
-      start: "+=3500 95%",
-      end: "+=3500 90%",
+      start: "+=3600 bottom",
+      end: "+=3600 bottom",
       toggleActions: "play none play reverse",
       onEnter: () => {
         gsap.to(powerBySectionRef.current, {
@@ -77,7 +77,7 @@ function PoweredBySection() {
         gsap.to("#powered-accordion-1-content", {
           height: 0,
           opacity: 0,
-          duration: 0.1,
+          duration: 0.15,
         });
         gsap.to("#powered-accordion-2-header", {
           opacity: 1,
@@ -88,7 +88,7 @@ function PoweredBySection() {
         gsap.to("#powered-accordion-2-content", {
           height: "130px",
           opacity: 1,
-          duration: 0.1,
+          duration: 0.5,
         });
       },
     });
@@ -105,12 +105,12 @@ function PoweredBySection() {
         gsap.to("#powered-accordion-2-content", {
           height: "0px",
           opacity: 0,
-          duration: 0.1,
+          duration: 0.15,
         });
         gsap.to("#powered-accordion-3-content", {
           height: "130px",
           opacity: 1,
-          duration: 0.1,
+          duration: 0.5,
         });
         gsap.to("#powered-accordion-3-header", {
           opacity: 1,
@@ -129,12 +129,12 @@ function PoweredBySection() {
         gsap.to("#powered-accordion-1-content", {
           height: "130px",
           opacity: 1,
-          duration: 0.1,
+          duration: 0.5,
         });
         gsap.to("#powered-accordion-2-content", {
           height: "0px",
           opacity: 0,
-          duration: 0.1,
+          duration: 0.15,
         });
         gsap.to("#powered-accordion-2-header", {
           opacity: 0.4,
@@ -158,12 +158,12 @@ function PoweredBySection() {
         gsap.to("#powered-accordion-2-content", {
           height: "130px",
           opacity: 1,
-          duration: 0.1,
+          duration: 0.5,
         });
         gsap.to("#powered-accordion-3-content", {
           height: "0px",
           opacity: 0,
-          duration: 0.1,
+          duration: 0.15,
         });
         gsap.to("#powered-accordion-3-header", {
           opacity: 0.4,

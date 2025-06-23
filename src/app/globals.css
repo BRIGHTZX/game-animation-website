@@ -52,7 +52,7 @@
     clip-path: polygon(4% 0, 83% 21%, 100% 73%, 0% 100%);
   }
   .box-image {
-    @apply inline-block size-10 overflow-hidden rounded-xl bg-black opacity-0;
+    @apply rounded-xl bg-black p-4;
   }
 }
 

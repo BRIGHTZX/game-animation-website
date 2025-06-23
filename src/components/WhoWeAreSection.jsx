@@ -4,11 +4,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { useRef } from "react";
 import TrapezoidButton from "./TrapzoidButton";
+import ImagePreview from "./ImagePreview";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 function WhoWeAreSection() {
+  const container1Ref = useRef(null);
+  const container2Ref = useRef(null);
+  const container3Ref = useRef(null);
   const sectionRef = useRef(null);
   const textRef = useRef(null);
+
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -17,6 +22,40 @@ function WhoWeAreSection() {
         end: "center 85%",
         toggleActions: "play none play reverse",
       },
+      onReverseComplete: () => {
+        gsap.to(container1Ref.current, {
+          opacity: 0,
+          duration: 0.2,
+          ease: "power1.out",
+        });
+        gsap.to(container2Ref.current, {
+          opacity: 0,
+          duration: 0.2,
+          ease: "power1.out",
+        });
+        gsap.to(container3Ref.current, {
+          opacity: 0,
+          duration: 0.2,
+          ease: "power1.out",
+        });
+      },
+      onComplete: () => {
+        gsap.to(container1Ref.current, {
+          opacity: 1,
+          duration: 1,
+          ease: "power1.out",
+        });
+        gsap.to(container2Ref.current, {
+          opacity: 1,
+          duration: 1,
+          ease: "power1.out",
+        });
+        gsap.to(container3Ref.current, {
+          opacity: 1,
+          duration: 1,
+          ease: "power1.out",
+        });
+      },
     });
     const text = new SplitText(textRef.current, {
       type: "words",
@@ -24,8 +63,8 @@ function WhoWeAreSection() {
     tl.fromTo(
       text.words,
       {
-        x: -500,
-        y: -200,
+        x: -200,
+        y: 200,
         z: -100,
         rotateX: -60,
         rotateY: 60,
@@ -41,66 +80,6 @@ function WhoWeAreSection() {
         duration: 1,
         ease: "power2.inOut",
         stagger: 0.01,
-        onComplete: () => {
-          gsap.to("#box-1", {
-            opacity: 1,
-            duration: 0.5,
-            ease: "power2.out",
-          });
-          gsap.to("#box-2", {
-            opacity: 1,
-            duration: 0.5,
-            ease: "power2.out",
-          });
-          gsap.to("#box-3", {
-            opacity: 1,
-            duration: 0.5,
-            ease: "power2.out",
-          });
-        },
-      },
-    );
-  }, []);
-  useGSAP(() => {
-    gsap.fromTo(
-      ".box-show-image-1",
-      {
-        scale: 0.8,
-      },
-      {
-        ease: "power2.inOut",
-        duration: 1,
-        scale: 1.2,
-        yoyo: true,
-        repeat: -1,
-      },
-    );
-    gsap.fromTo(
-      ".box-show-image-2",
-      {
-        scale: 0.8,
-      },
-      {
-        ease: "power2.inOut",
-        delay: 0.5,
-        duration: 1,
-        scale: 1.2,
-        yoyo: true,
-        repeat: -1,
-      },
-    );
-    gsap.fromTo(
-      ".box-show-image-3",
-      {
-        scale: 0.8,
-      },
-      {
-        ease: "power2.inOut",
-        delay: 1,
-        duration: 1,
-        scale: 1.2,
-        yoyo: true,
-        repeat: -1,
       },
     );
   }, []);
@@ -120,42 +99,58 @@ function WhoWeAreSection() {
       >
         <p className="font-robert-medium text-xs text-black">WHO WE ARE</p>
 
-        <div className="mt-10">
+        <div className="relative mt-10 border border-red-500">
           <div
             ref={textRef}
             className="special-font flex flex-col items-center text-center font-zentry text-[7rem] leading-[8rem] text-nowrap text-black"
           >
-            <p>
+            <div>
               We&apos;re B<b>uilding</b>
-            </p>
-            <p className="flex items-center gap-4">
-              A NEW <span id="box-1" className="box-image box-show-image-1" />{" "}
+            </div>
+            <div className="relative flex items-center justify-between gap-4">
+              A NEW
+              <ImagePreview
+                containerRef={container1Ref}
+                imgSrc="/img/about-entry-1.webp"
+                durationTime={1.2}
+              />
               <span>
                 Realit
                 <b>Y</b>
               </span>
-            </p>
-            <p>
+            </div>
+            <div>
               That ReW<b>a</b>rds
-            </p>
-            <p className="flex items-center gap-4">
-              Play<b>e</b>rs{" "}
-              <span id="box-2" className="box-image box-show-image-2" />{" "}
-              and{" "}
-            </p>
-            <p>
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              <span>
+                Play<b className="m-0 p-0">e</b>rs
+              </span>
+              <ImagePreview
+                containerRef={container2Ref}
+                imgSrc="/img/about-entry-2.webp"
+                durationTime={1}
+              />
+              <span>and</span>
+            </div>
+            <div>
               E<b>m</b>Powers
-            </p>
-            <p>
+            </div>
+            <div>
               Hu<b>m</b>ans & AI
-            </p>
-            <p className="flex items-center gap-4">
-              To <span id="box-3" className="box-image box-show-image-3" />{" "}
+            </div>
+            <div className="flex items-center justify-between gap-4">
+              To
+              <ImagePreview
+                containerRef={container3Ref}
+                imgSrc="/img/about-entry-3.webp"
+                durationTime={0.9}
+              />
               <span>
                 Thri
                 <b>v</b>e
               </span>
-            </p>
+            </div>
           </div>
         </div>
 
