@@ -70,7 +70,7 @@ function ImagePreview({ containerRef, imgSrc, durationTime }) {
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         className={cn(
-          "absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-700",
+          "absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-600",
           isHovering
             ? "pointer-events-auto size-[220px] opacity-100"
             : "pointer-events-none size-4 opacity-0",

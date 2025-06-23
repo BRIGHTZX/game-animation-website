@@ -59,9 +59,7 @@ function AboutSection() {
         setIsAnimate(false);
       },
     });
-  });
 
-  useGSAP(() => {
     gsap.set("#stones", {
       scale: 0.5,
     });

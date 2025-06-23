@@ -99,7 +99,7 @@ function WhoWeAreSection() {
       >
         <p className="font-robert-medium text-xs text-black">WHO WE ARE</p>
 
-        <div className="relative mt-10 border border-red-500">
+        <div className="relative mt-10">
           <div
             ref={textRef}
             className="special-font flex flex-col items-center text-center font-zentry text-[7rem] leading-[8rem] text-nowrap text-black"

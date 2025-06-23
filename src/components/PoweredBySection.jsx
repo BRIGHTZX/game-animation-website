@@ -48,9 +48,7 @@ function PoweredBySection() {
         });
       },
     });
-  }, []);
 
-  useGSAP(() => {
     if (!powerBySectionRef.current) return;
 
     const tl = gsap.timeline({

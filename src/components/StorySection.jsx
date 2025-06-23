@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 
 import gsap from "gsap/all";
@@ -61,7 +61,7 @@ function StorySection() {
     });
   };
 
-  useEffect(() => {
+  () => {
     if (!isHovering) {
       gsap.to(storyImgRef.current, {
         duration: 1,
@@ -71,7 +71,8 @@ function StorySection() {
         ease: "power1.out",
       });
     }
-  }, [isHovering]);
+  },
+    [isHovering];
 
   return (
     <section
