@@ -1,12 +1,12 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import SplitText from "gsap/SplitText";
 import TextLeftAnimation from "./TextLeftAnimation";
 import { useState } from "react";
 import { useGSAP } from "@gsap/react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
-gsap.registerPlugin(ScrollTrigger, SplitText);
+gsap.registerPlugin(ScrollTrigger);
 
 function CardSection() {
   const [isCard2Hovered, setIsCard2Hovered] = useState(false);
@@ -22,26 +22,31 @@ function CardSection() {
         rotateY: 50,
         rotateZ: -10,
         translateX: 10,
-        translateY: -15,
+        translateY: -20,
         translateZ: 300,
+        scale: 1.5,
       });
     }
+  }, [isCard2Hovered]);
 
+  useGSAP(() => {
     if (isCard4Hovered) {
       resetText("#card-4-text", {
-        y: -60,
+        translateY: -200,
+        scale: 1,
       });
     } else {
       transformText("#card-4-text", {
-        rotateX: -25,
-        rotateY: 50,
-        rotateZ: -20,
-        translateX: 40,
-        translateY: 0,
-        translateZ: 300,
-        scaleY: 0.7,
+        rotateX: -30,
+        rotateY: 30,
+        rotateZ: -5,
+        scaleY: 1,
+        scale: 1.4,
       });
     }
+  }, [isCard4Hovered]);
+
+  useGSAP(() => {
     if (isCard6Hovered) {
       resetText("#card-6-text", {
         scale: 1.4,
@@ -57,10 +62,119 @@ function CardSection() {
         scale: 1.4,
       });
     }
-  }, [isCard2Hovered, isCard4Hovered, isCard6Hovered]);
+  }, [isCard6Hovered]);
+
+  useGSAP(() => {
+    gsap.fromTo(
+      "#card-1",
+      { opacity: 0, rotateX: -60 },
+      {
+        opacity: 1,
+        rotateX: 0,
+        duration: 2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#card-1-container",
+          start: "top 90%",
+          end: "bottom top",
+          toggleActions: "play none play reverse",
+          markers: true,
+        },
+      },
+    );
+
+    gsap.fromTo(
+      "#card-2",
+      { opacity: 0, rotateX: -60 },
+      {
+        opacity: 1,
+        rotateX: 0,
+        duration: 2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#card-2-container",
+          start: "top 90%",
+          end: "bottom top",
+          toggleActions: "play none play reverse",
+          markers: true,
+        },
+      },
+    );
+
+    gsap.fromTo(
+      "#card-3",
+      { opacity: 0, rotateX: -60 },
+      {
+        opacity: 1,
+        rotateX: 0,
+        duration: 2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#card-3-container",
+          start: "top 90%",
+          end: "bottom top",
+          toggleActions: "play none play reverse",
+          markers: true,
+        },
+      },
+    );
+
+    gsap.fromTo(
+      "#card-4",
+      { opacity: 0, rotateX: -60 },
+      {
+        opacity: 1,
+        rotateX: 0,
+        duration: 2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#card-4-container",
+          start: "top 90%",
+          end: "bottom top",
+          toggleActions: "play none play reverse",
+          markers: true,
+        },
+      },
+    );
+
+    gsap.fromTo(
+      "#card-5",
+      { opacity: 0, rotateX: -60 },
+      {
+        opacity: 1,
+        rotateX: 0,
+        duration: 2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#card-5-container",
+          start: "top 90%",
+          end: "bottom top",
+          toggleActions: "play none play reverse",
+          markers: true,
+        },
+      },
+    );
+
+    gsap.fromTo(
+      "#card-6",
+      { opacity: 0, rotateX: -60 },
+      {
+        opacity: 1,
+        rotateX: 0,
+        duration: 2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: "#card-6-container",
+          start: "top 90%",
+          end: "bottom top",
+          toggleActions: "play none play reverse",
+          markers: true,
+        },
+      },
+    );
+  }, []);
 
   const transformText = (id, options) => {
-    console.log(id);
     gsap.to(id, {
       rotateX: options?.rotateX,
       rotateY: options?.rotateY,
@@ -76,7 +190,6 @@ function CardSection() {
   };
 
   const resetText = (id, options) => {
-    console.log(id);
     gsap.to(id, {
       rotateX: options?.rotateX ?? 0,
       rotateY: options?.rotateY ?? 0,
@@ -105,13 +218,18 @@ function CardSection() {
         subTextClass="text-blut-50"
       />
 
-      <div className="40 flex justify-center gap-10">
+      <div className="flex justify-center gap-10">
         <div className="flex flex-1 flex-col items-end gap-10 pt-40">
           {/* Card Left 1 */}
-          <div className="relative h-[250px] w-[65%] overflow-hidden rounded-md border border-[#2D2D30]">
+          <CardContainer
+            containerId="card-1-container"
+            containerClass="relative lg:h-[250px] xl:h-[350px] w-[65%]"
+            cardId="card-1"
+            cardClass="relative size-full overflow-hidden rounded-md border border-[#2D2D30]"
+          >
             <div className="absolute top-4 left-4 z-30">
-              <p className="font-robert-medium text-xs">Products</p>
-              <h1 className="special-font font-zentry text-[5rem] leading-[5rem] text-nowrap text-blue-50">
+              <p className="font-robert-medium text-xs xl:text-sm">Products</p>
+              <h1 className="special-font font-zentry text-[5rem] leading-[5rem] text-nowrap text-blue-50 xl:text-[7rem] xl:leading-[7rem]">
                 4<b>+</b>
               </h1>
             </div>
@@ -126,24 +244,18 @@ function CardSection() {
                 playsInline
               />
             </div>
-          </div>
+          </CardContainer>
 
           {/* Card left 2 */}
-          <div
-            id="card-2"
-            style={{
-              perspective: "1000px",
-            }}
+          <CardContainer
+            cardId="card-2"
+            containerId="card-2-container"
+            containerClass="relative h-[300px] xl:h-[400px] w-[40%] xl:w-[50%]"
+            cardClass="relative size-full overflow-hidden rounded-md bg-[#EDFF66]"
             onMouseEnter={() => setIsCard2Hovered(true)}
             onMouseLeave={() => setIsCard2Hovered(false)}
-            className="relative h-[300px] w-[40%] overflow-hidden rounded-md bg-[#EDFF66]"
           >
-            <div
-              style={{
-                transformStyle: "preserve-3d",
-              }}
-              className="absolute-center z-30"
-            >
+            <div className="absolute-center z-30">
               <h1
                 id="card-2-text"
                 className="special-font pointer-events-none font-zentry text-[10rem] text-nowrap text-black"
@@ -154,10 +266,15 @@ function CardSection() {
             <p className="absolute right-4 bottom-4 font-robert-medium text-xs text-black">
               Partners
             </p>
-          </div>
+          </CardContainer>
 
           {/* Card left 3 */}
-          <div className="relative h-[650px] w-[65%] overflow-hidden rounded-md bg-[#5542FF]">
+          <CardContainer
+            cardId="card-3"
+            containerId="card-3-container"
+            containerClass="relative lg:h-[650px] xl:h-[800px] w-[65%]"
+            cardClass="relative size-full overflow-hidden rounded-md bg-[#5542FF]"
+          >
             <div className="absolute top-4 left-4 z-30 text-black">
               <p className="font-robert-medium text-xs">Products</p>
               <h1 className="special-font font-zentry text-[5rem] leading-[5rem] text-nowrap text-black">
@@ -206,31 +323,25 @@ function CardSection() {
                 color="bg-blue-50"
               />
             </div>
-          </div>
+          </CardContainer>
         </div>
         <div className="flex flex-1 flex-col gap-4">
           {/* Card Right 4 */}
-          <div
-            id="card-4"
-            style={{
-              perspective: "1000px",
-            }}
+          <CardContainer
+            cardId="card-4"
+            containerId="card-4-container"
+            containerClass="relative lg:h-[650px] xl:h-[800px] w-[65%]"
             onMouseEnter={() => setIsCard4Hovered(true)}
             onMouseLeave={() => setIsCard4Hovered(false)}
-            className="relative h-[650px] w-[65%] overflow-hidden rounded-md bg-[#4D3BE6]"
+            cardClass="relative size-full overflow-hidden  rounded-md bg-[#4D3BE6]"
           >
             <div className="absolute top-4 left-4 z-20 text-blue-50">
               <p className="font-robert-medium text-xs text-black">Residents</p>
             </div>
-            <div
-              style={{
-                transformStyle: "preserve-3d",
-              }}
-              className="absolute top-10 left-1/2 z-10 -translate-x-1/2"
-            >
+            <div className="absolute -top-4 left-1/2 z-10 -translate-x-1/2">
               <h1
                 id="card-4-text"
-                className="special-font pointer-events-none scale-y-70 font-zentry text-[12rem] text-nowrap text-black"
+                className="special-font pointer-events-none font-zentry text-[12rem] text-nowrap text-black"
               >
                 5<b>00</b>K+
               </h1>
@@ -245,18 +356,23 @@ function CardSection() {
                 alt="card4"
               />
             </div>
-          </div>
+          </CardContainer>
 
           {/* Card Right 5 */}
-          <div className="relative h-[300px] w-[40%] overflow-hidden rounded-md border border-[#2D2D30] bg-black">
+          <CardContainer
+            cardId="card-5"
+            containerId="card-5-container"
+            containerClass="relative h-[300px] w-[40%]  xl:h-[400px] xl:w-[50%]"
+            cardClass="relative size-full overflow-hidden rounded-md border border-[#2D2D30] bg-black"
+          >
             <div className="absolute top-4 left-4">
-              <h1 className="special-font pointer-events-none font-zentry text-5xl text-nowrap text-blue-50">
+              <h1 className="special-font pointer-events-none font-zentry text-5xl text-nowrap text-blue-50 xl:text-[5.5rem]">
                 W<b>o</b>rld-Class <br />B<b>a</b>ckers
               </h1>
             </div>
 
             <div className="absolute right-4 bottom-4 z-20">
-              <div className="flex flex-col gap-2 text-end font-robert-medium text-[10px] leading-1 text-blue-50 uppercase">
+              <div className="flex flex-col gap-2 text-end font-robert-medium text-[10px] leading-1 text-blue-50 uppercase xl:text-xs xl:leading-1.5">
                 <p>Coinbase Ventures</p>
                 <p>Vsi Labs</p>
                 <p>Spatan</p>
@@ -271,35 +387,30 @@ function CardSection() {
                 <p>Synergis</p>
               </div>
             </div>
-          </div>
+          </CardContainer>
 
           {/* Card Right 6 */}
-          <div
-            style={{
-              perspective: "1000px",
-            }}
+          <CardContainer
+            cardId="card-6"
+            containerId="card-6-container"
+            containerClass="relative h-[300px] xl:h-[400px] w-[65%] "
+            cardClass="relative size-full overflow-hidden rounded-md bg-[#DFDFF2]"
             onMouseEnter={() => setIsCard6Hovered(true)}
             onMouseLeave={() => setIsCard6Hovered(false)}
-            className="relative h-[300px] w-[65%] overflow-hidden rounded-md bg-[#DFDFF2]"
           >
             <p className="absolute top-4 left-4 font-robert-medium text-xs text-black">
               Revenue generated <br />
               2024
             </p>
-            <div
-              style={{
-                transformStyle: "preserve-3d",
-              }}
-              className="absolute-center z-30"
-            >
+            <div className="absolute-center z-30">
               <h1
                 id="card-6-text"
-                className="special-font pointer-events-none font-zentry text-[10rem] text-nowrap text-black"
+                className="special-font pointer-events-none font-zentry text-[17rem] text-nowrap text-black"
               >
                 40<b>M</b>
               </h1>
             </div>
-          </div>
+          </CardContainer>
         </div>
       </div>
     </div>
@@ -315,6 +426,38 @@ const BulletText = ({ text, color }) => {
       <p className="font-robert-medium text-xs text-blue-50 uppercase">
         {text}
       </p>
+    </div>
+  );
+};
+
+const CardContainer = ({
+  containerId,
+  containerClass,
+  cardId,
+  cardClass,
+  onMouseEnter = () => {},
+  onMouseLeave = () => {},
+  children,
+}) => {
+  return (
+    <div
+      id={containerId}
+      className={cn(containerClass)}
+      style={{
+        perspective: "1000px",
+      }}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      <div
+        id={cardId}
+        className={cn(cardClass)}
+        style={{
+          transformStyle: "preserve-3d",
+        }}
+      >
+        {children}
+      </div>
     </div>
   );
 };

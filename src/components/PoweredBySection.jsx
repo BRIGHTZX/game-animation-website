@@ -49,8 +49,6 @@ function PoweredBySection() {
       },
     });
 
-    if (!powerBySectionRef.current) return;
-
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: powerBySectionRef.current,
