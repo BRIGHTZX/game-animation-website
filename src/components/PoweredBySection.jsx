@@ -32,8 +32,8 @@ function PoweredBySection() {
 
     ScrollTrigger.create({
       trigger: powerBySectionRef.current,
-      start: "+=3600 bottom",
-      end: "+=3600 bottom",
+      start: "+=3500 bottom",
+      end: "+=3500 bottom",
       toggleActions: "play none play reverse",
       onEnter: () => {
         gsap.to(powerBySectionRef.current, {

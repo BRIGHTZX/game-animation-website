@@ -113,6 +113,7 @@ function WhoWeAreSection() {
         ease: "power2.inOut",
         stagger: 0.05,
       },
+      0.2,
     );
   }, []);
   return (
@@ -143,7 +144,7 @@ function WhoWeAreSection() {
             <div className="relative mt-10">
               <div
                 ref={textRef}
-                className="special-font flex flex-col items-center text-center font-zentry text-[6rem] leading-[8rem] text-nowrap text-black"
+                className="special-font flex flex-col items-center text-center font-zentry text-[6rem] leading-[6rem] text-nowrap text-black"
               >
                 <div>
                   We&apos;re B<b>uilding</b>
