@@ -81,9 +81,6 @@ function StorySection() {
     >
       <div className="absolute top-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="z-10 flex flex-col items-center justify-center">
-          <p className="mb-10 font-robert-medium text-xs font-semibold uppercase">
-            The Open IP Universe
-          </p>
           <TextAnimation
             textId="story-header-word"
             text={
@@ -95,6 +92,9 @@ function StorySection() {
             start="top 80%"
             end="bottom top"
             delay={0}
+            subTextId="story-sub-text"
+            subText="The Open IP Universe"
+            subTextClass="text-blue-50"
           />
         </div>
       </div>

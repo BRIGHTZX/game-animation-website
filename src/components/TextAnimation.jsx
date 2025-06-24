@@ -8,7 +8,17 @@ import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin, SplitText);
 
-function TextAnimation({ textId, text, textClass, start, end, delay }) {
+function TextAnimation({
+  textId,
+  text,
+  textClass,
+  subTextId,
+  subText,
+  subTextClass,
+  start,
+  end,
+  delay,
+}) {
   const sectionRef = useRef(null);
   const textContainerRef = useRef(null);
 
@@ -31,11 +41,28 @@ function TextAnimation({ textId, text, textClass, start, end, delay }) {
           trigger: sectionRef.current,
           start: start ?? "20% 80%",
           end: end ?? "bottom top",
-          markers: true,
           toggleActions: "play none play reverse",
         },
       },
     );
+
+    const subTextSplit = SplitText.create(`#${subTextId}`, {
+      type: "words",
+    });
+
+    gsap.from(subTextSplit.words, {
+      y: 50,
+      opacity: 0,
+      stagger: 0.05,
+      duration: 0.3,
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 90%",
+        end: "bottom 60%",
+        toggleActions: "play none play reverse",
+      },
+    });
+
     const wordSplit = SplitText.create(`#${textId}`, {
       type: "words",
       wordsClass: "word",
@@ -78,6 +105,17 @@ function TextAnimation({ textId, text, textClass, start, end, delay }) {
       className="relative"
       style={{ perspective: "1000px" }}
     >
+      {subText && (
+        <p
+          id={subTextId}
+          className={cn(
+            "text-center font-robert-medium text-[0.7rem] font-bold text-black uppercase",
+            subTextClass,
+          )}
+        >
+          {subText}
+        </p>
+      )}
       <div ref={textContainerRef} style={{ transformStyle: "preserve-3d" }}>
         <div
           id={textId}

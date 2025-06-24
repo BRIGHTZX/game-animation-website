@@ -179,14 +179,14 @@ function PoweredBySection() {
       className="relative h-[100dvh] w-screen overflow-x-hidden bg-black"
     >
       <TextLeftAnimation
-        charId="powered-by-header-char"
-        charText={
+        textId="powered-by-header-char"
+        text={
           <>
             The Univ<b>e</b>rse <br />
             Powered By Z<b>e</b>nt
           </>
         }
-        charClass="text-black"
+        textClass="text-black"
       />
 
       <div className="mt-10 px-20">

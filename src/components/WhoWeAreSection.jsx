@@ -14,8 +14,27 @@ function WhoWeAreSection() {
   const sectionRef = useRef(null);
   const textContainerRef = useRef(null);
   const textRef = useRef(null);
+  const subTextRef = useRef(null);
 
   useGSAP(() => {
+    const subText = new SplitText(subTextRef.current, {
+      type: "words",
+    });
+
+    gsap.from(subText.words, {
+      y: 50,
+      opacity: 0,
+      stagger: 0.1,
+      delay: 0.3,
+      duration: 1,
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "20% 90%",
+        end: "bottom 60%",
+        toggleActions: "play none play reverse",
+      },
+    });
+
     gsap.fromTo(
       textContainerRef.current,
       {
@@ -115,7 +134,12 @@ function WhoWeAreSection() {
           className="size-full overflow-x-hidden"
         >
           <div className="absolute-center flex flex-col items-center justify-center">
-            <p className="font-robert-medium text-xs text-black">WHO WE ARE</p>
+            <p
+              ref={subTextRef}
+              className="font-robert-medium text-xs text-black"
+            >
+              WHO WE ARE
+            </p>
             <div className="relative mt-10">
               <div
                 ref={textRef}

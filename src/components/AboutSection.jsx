@@ -129,9 +129,6 @@ function AboutSection() {
       className="relative min-h-screen w-screen overflow-hidden bg-[#DFDFF2] pt-40"
     >
       <div>
-        <p className="text-center font-robert-medium text-xs font-bold text-black uppercase">
-          Welcome To Zentry
-        </p>
         <TextAnimation
           textId="about-header-word"
           text={
@@ -140,6 +137,8 @@ function AboutSection() {
               Largest Shared <b>A</b>dventure
             </>
           }
+          subTextId="about-sub-text"
+          subText="Welcome To Zentry"
         />
       </div>
 

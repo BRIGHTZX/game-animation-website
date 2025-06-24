@@ -4,16 +4,59 @@ import gsap from "gsap/all";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import TextPlugin from "gsap/TextPlugin";
+import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin, SplitText);
 
-function TextLeftAnimation({ charText, charId, charClass }) {
+function TextLeftAnimation({
+  textId,
+  text,
+  textClass,
+  subTextId,
+  subText,
+  subTextClass,
+}) {
+  const sectionRef = useRef(null);
+  const textContainerRef = useRef(null);
+
   useGSAP(() => {
-    const wordSplit = SplitText.create(`#${charId}`, {
+    gsap.from(textContainerRef.current, {
+      rotateX: -30,
+      rotateY: -80,
+      duration: 1,
+      ease: "power1.out",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "20% 80%",
+        end: "bottom 40%",
+        toggleActions: "play none play reverse",
+      },
+    });
+
+    const subTextSplit = SplitText.create(`#${subTextId}`, {
       type: "words",
     });
 
-    gsap.set(`#${charId}`, {
+    // gsap.from(subTextSplit.words, {
+    //   y: 50,
+    //   opacity: 0,
+    //   stagger: 0.05,
+    //   delay: 1,
+    //   duration: 0.5,
+    //   scrollTrigger: {
+    //     trigger: sectionRef.current,
+    //     start: "20% 80%",
+    //     end: "bottom 40%",
+    //     markers: true,
+    //     toggleActions: "play none play reverse",
+    //   },
+    // });
+
+    const wordSplit = SplitText.create(`#${textId}`, {
+      type: "words",
+    });
+
+    gsap.set(`#${textId}`, {
       xPercent: 5,
       yPercent: 10,
       scale: 1,
@@ -23,8 +66,8 @@ function TextLeftAnimation({ charText, charId, charClass }) {
     // ✅ Animate wordSplit (บรรทัดสอง) — ทีละคำ แบบเรียง
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: `#${charId}`,
-        start: "top 80%",
+        trigger: sectionRef.current,
+        start: "20% 80%",
         end: "bottom 40%",
         toggleActions: "play none play reverse",
       },
@@ -39,19 +82,46 @@ function TextLeftAnimation({ charText, charId, charClass }) {
       duration: 0.1,
       ease: "power1.out",
     });
+
+    tl.from(subTextSplit.words, {
+      y: 10,
+      opacity: 0,
+      stagger: 0.05,
+      duration: 0.5,
+    });
   }, []);
 
   return (
-    <div className="relative">
-      <h1
-        id={charId}
+    <div
+      ref={sectionRef}
+      style={{ perspective: "1000px" }}
+      className="relative"
+    >
+      <p
+        id={subTextId}
         className={cn(
-          "special-font mt-10 font-zentry text-[7rem] leading-[7rem] text-nowrap text-black uppercase opacity-1",
-          charClass,
+          "absolute top-0 left-20 font-robert-medium text-[0.7rem] font-bold text-black uppercase",
+          subTextClass,
         )}
       >
-        {charText}
-      </h1>
+        {subText}
+      </p>
+      <div
+        ref={textContainerRef}
+        style={{
+          transformStyle: "preserve-3d",
+        }}
+      >
+        <h1
+          id={textId}
+          className={cn(
+            "special-font mt-10 font-zentry text-[7rem] leading-[7rem] text-nowrap text-black uppercase opacity-1",
+            textClass,
+          )}
+        >
+          {text}
+        </h1>
+      </div>
     </div>
   );
 }
