@@ -77,35 +77,31 @@ function StorySection() {
   return (
     <section
       ref={storySectionRef}
-      className="relative h-[110dvh] w-screen overflow-hidden bg-black"
+      className="relative h-[120dvh] w-screen overflow-hidden bg-black"
     >
-      <div className="absolute top-80 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div className="absolute top-[20%] left-1/2 -translate-x-1/2 -translate-y-1/2">
         <div className="z-10 flex flex-col items-center justify-center">
           <p className="mb-10 font-robert-medium text-xs font-semibold uppercase">
             The Open IP Universe
           </p>
           <TextAnimation
-            lineId="story-header-line"
-            wordId="story-header-word"
-            lineText={
+            textId="story-header-word"
+            text={
               <>
-                The St<b>o</b>ry of
+                The St<b>o</b>ry of <br />A Hidden Real<b>m</b>
               </>
             }
-            wordText={
-              <>
-                A Hidden Real<b>m</b>
-              </>
-            }
-            lineClass="text-blue-50"
-            wordClass="text-blue-50"
+            textClass="text-blue-50"
+            start="top 80%"
+            end="bottom top"
+            delay={0}
           />
         </div>
       </div>
 
       <div
         style={{ perspective: "1000px" }}
-        className="rounded-container absolute top-[70%] left-[45%] z-20 size-full h-[60%] w-[65%] -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
+        className="rounded-container absolute top-[60%] left-[45%] z-20 size-full h-[60%] w-[65%] -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
       >
         <div
           onMouseMove={handleMouseMove}

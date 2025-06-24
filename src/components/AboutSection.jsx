@@ -54,8 +54,8 @@ function AboutSection() {
     clipAnimation.set(".about-image-clip-path", {
       //  clip-path: polygon(4% 0, 83% 21%, 100% 73%, 0% 100%);
       clipPath: "polygon(0 0, 100% 3%, 100% 97%, 0 100%)",
-      width: "500px",
-      height: "800px",
+      width: "400px",
+      height: "600px",
       borderRadius: "0",
     });
 
@@ -82,12 +82,20 @@ function AboutSection() {
 
     gsap.set("#stones", {
       scale: 0.5,
+      opacity: 0,
     });
 
     gsap.to("#stones", {
-      scale: 1.35,
-      duration: 1,
+      scale: 1.3,
+      opacity: 1,
+      duration: 1.5,
       ease: "power1.out",
+      scrollTrigger: {
+        trigger: "#clip",
+        start: "top 90%",
+        end: "bottom 60%",
+        toggleActions: "play none play reverse",
+      },
     });
   });
 
@@ -120,21 +128,18 @@ function AboutSection() {
       id="about-section"
       className="relative min-h-screen w-screen overflow-hidden bg-[#DFDFF2] pt-40"
     >
-      <div className="mb-16">
+      <div>
         <p className="text-center font-robert-medium text-xs font-bold text-black uppercase">
           Welcome To Zentry
         </p>
         <TextAnimation
-          lineId="about-header-line"
-          wordId="about-header-word"
-          wordText={
+          textId="about-header-word"
+          text={
             <>
-              Disc<b>o</b>ver The World&apos;s
+              Disc<b>o</b>ver The World&apos;s <br />
+              Largest Shared <b>A</b>dventure
             </>
           }
-          lineText="
-          Largest Shared Adventure
-"
         />
       </div>
 
@@ -152,7 +157,7 @@ function AboutSection() {
           style={{ transformStyle: "preserve-3d" }}
           className="rounded-container"
         >
-          <div className="about-image-clip-path absolute-center">
+          <div className="about-image-clip-path absolute-center z-20">
             <Image
               src="/img/about.webp"
               alt="about-section-1"
@@ -162,26 +167,26 @@ function AboutSection() {
             />
             <RoundedCorners />
           </div>
-          <div
-            id="stones"
-            className="absolute top-1/2 left-1/2 z-20 h-full w-full -translate-x-1/2 -translate-y-1/2"
-          >
-            <div className="h-full w-full shadow-lg">
-              <Image
-                src="/img/stones.webp"
-                alt="stones"
-                className="h-full w-full object-cover"
-                width={1000}
-                height={1000}
-              />
-            </div>
+        </div>
+        <div
+          id="stones"
+          className="absolute top-1/2 left-1/2 z-20 h-full w-[80%] -translate-x-1/2 -translate-y-1/2"
+        >
+          <div className="h-full w-full">
+            <Image
+              src="/img/stones.webp"
+              alt="stones"
+              className="h-full w-full object-cover"
+              width={1000}
+              height={1000}
+            />
           </div>
         </div>
-        <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-black">
-          <h1 className="text-center font-robert-medium text-2xl">
+        <div className="absolute bottom-8 left-1/2 z-[-1] -translate-x-1/2 text-black">
+          <h1 className="text-center font-robert-medium text-xl">
             The Metagame begins-your life, now an epic MMORPG
           </h1>
-          <p className="text-center font-robert-regular text-xl leading-6 text-zinc-600">
+          <p className="text-center font-robert-regular text-lg leading-6 text-zinc-600">
             Zentry is the unified play layer driving attention and <br />
             contribution through croos-world AI gamification
           </p>

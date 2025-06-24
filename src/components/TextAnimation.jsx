@@ -4,101 +4,91 @@ import gsap from "gsap/all";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import TextPlugin from "gsap/TextPlugin";
+import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin, SplitText);
 
-function TextAnimation({
-  wordText,
-  lineText,
-  lineId,
-  wordId,
-  lineClass,
-  wordClass,
-}) {
-  useGSAP(() => {
-    const lineSplit = SplitText.create(`#${lineId}`, {
-      type: "lines",
-      linesClass: "line",
-    });
+function TextAnimation({ textId, text, textClass, start, end, delay }) {
+  const sectionRef = useRef(null);
+  const textContainerRef = useRef(null);
 
-    const wordSplit = SplitText.create(`#${wordId}`, {
+  useGSAP(() => {
+    gsap.fromTo(
+      textContainerRef.current,
+      {
+        x: -200,
+        rotateX: -30,
+        rotateY: -80,
+      },
+      {
+        x: 0,
+        rotateX: 0,
+        rotateY: 0,
+        duration: 1.5,
+        delay: delay ?? 0.3,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: start ?? "20% 80%",
+          end: end ?? "bottom top",
+          markers: true,
+          toggleActions: "play none play reverse",
+        },
+      },
+    );
+    const wordSplit = SplitText.create(`#${textId}`, {
       type: "words",
       wordsClass: "word",
     });
 
-    gsap.set(`#${lineId}`, {
-      perspective: 800,
-      scale: 1,
-      opacity: 1,
-    });
-
-    gsap.set(`#${wordId}`, {
+    gsap.set(`#${textId}`, {
       perspective: 800,
       opacity: 1,
     });
 
-    gsap.from(lineSplit.lines, {
-      x: -500,
-      z: -100,
-      y: 100,
-      rotationX: -30,
-      rotationY: -30,
-      autoAlpha: 0,
-      stagger: 0.05,
-      duration: 0.5,
-      ease: "power1.out",
-      scrollTrigger: {
-        trigger: `#${lineId}`,
-        start: "top 90%",
-        end: "bottom 55%",
-        toggleActions: "play none play reverse",
-      },
-    }); // เริ่มซ้อนกับท้าย
-
-    // ✅ Animate wordSplit (บรรทัดสอง) — ทีละคำ แบบเรียง
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: `#${wordId}`,
+        trigger: sectionRef.current,
         start: "top 90%",
         end: "bottom 60%",
         toggleActions: "play none play reverse",
       },
     });
 
-    tl.from(wordSplit.words, {
-      x: -500,
-      z: -100,
-      y: 100,
-      rotationX: -30,
-      rotationY: -30,
-      autoAlpha: 0,
-      scale: 1,
-      stagger: 0.1,
-      duration: 0.5,
-      ease: "power1.out",
-    });
+    tl.fromTo(
+      wordSplit.words,
+      {
+        x: -100,
+        opacity: 0,
+      },
+      {
+        x: 0,
+        delay: 0.3,
+        opacity: 1,
+        stagger: 0.05,
+        duration: 0.1,
+        ease: "power1.out",
+      },
+    );
   }, []);
 
   return (
-    <div>
-      <h1
-        id={lineId}
-        className={cn(
-          "special-font mt-10 text-center font-zentry text-[7rem] text-nowrap text-black uppercase opacity-1",
-          lineClass,
-        )}
-      >
-        {lineText}
-      </h1>
-      <h1
-        id={wordId}
-        className={cn(
-          "special-font mt-10 text-center font-zentry text-[7rem] leading-0.5 text-nowrap text-black uppercase opacity-1",
-          wordClass,
-        )}
-      >
-        {wordText}
-      </h1>
+    <div
+      ref={sectionRef}
+      className="relative"
+      style={{ perspective: "1000px" }}
+    >
+      <div ref={textContainerRef} style={{ transformStyle: "preserve-3d" }}>
+        <div
+          id={textId}
+          className={cn(
+            "special-font mt-10 text-center font-zentry text-[6rem] leading-[6rem] text-nowrap text-black uppercase opacity-1",
+            textClass,
+          )}
+        >
+          {text}
+        </div>
+      </div>
     </div>
   );
 }
