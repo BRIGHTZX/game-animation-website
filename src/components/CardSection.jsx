@@ -11,6 +11,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 function CardSection() {
   const [isCard2Hovered, setIsCard2Hovered] = useState(false);
   const [isCard4Hovered, setIsCard4Hovered] = useState(false);
+  const [isCard6Hovered, setIsCard6Hovered] = useState(false);
 
   useGSAP(() => {
     if (isCard2Hovered) {
@@ -38,11 +39,28 @@ function CardSection() {
         translateX: 40,
         translateY: 0,
         translateZ: 300,
+        scaleY: 0.7,
       });
     }
-  }, [isCard2Hovered, isCard4Hovered]);
+    if (isCard6Hovered) {
+      resetText("#card-6-text", {
+        scale: 1.4,
+      });
+    } else {
+      transformText("#card-6-text", {
+        rotateX: 45,
+        rotateY: -20,
+        rotateZ: -7,
+        translateZ: 300,
+        translateX: -10,
+        scaleY: 1.5,
+        scale: 1.4,
+      });
+    }
+  }, [isCard2Hovered, isCard4Hovered, isCard6Hovered]);
 
   const transformText = (id, options) => {
+    console.log(id);
     gsap.to(id, {
       rotateX: options?.rotateX,
       rotateY: options?.rotateY,
@@ -51,22 +69,25 @@ function CardSection() {
       translateY: options?.translateY,
       translateZ: options?.translateZ,
       duration: 1,
-      scaleY: 0.7,
+      scaleY: options?.scaleY ?? 1,
+      scale: options?.scale ?? 1,
       ease: "power2.out",
     });
   };
 
   const resetText = (id, options) => {
+    console.log(id);
     gsap.to(id, {
-      rotateX: 0,
-      rotateY: 0,
-      rotateZ: 0,
-      translateZ: 0,
+      rotateX: options?.rotateX ?? 0,
+      rotateY: options?.rotateY ?? 0,
+      rotateZ: options?.rotateZ ?? 0,
+      translateZ: options?.z ?? 0,
       translateX: options?.x ?? 0,
       translateY: options?.y ?? 0,
-      duration: 1,
-      scaleY: 1,
+      duration: options?.duration ?? 1,
+      scaleY: options?.scaleY ?? 1,
       ease: "power2.out",
+      scale: options?.scale ?? 1,
     });
   };
   return (
@@ -84,8 +105,8 @@ function CardSection() {
         subTextClass="text-blut-50"
       />
 
-      <div className="40 flex justify-center gap-10 border border-blue-500">
-        <div className="flex flex-1 flex-col items-end gap-10 border border-blue-500 pt-40">
+      <div className="40 flex justify-center gap-10">
+        <div className="flex flex-1 flex-col items-end gap-10 pt-40">
           {/* Card Left 1 */}
           <div className="relative h-[250px] w-[65%] overflow-hidden rounded-md border border-[#2D2D30]">
             <div className="absolute top-4 left-4 z-30">
@@ -115,7 +136,7 @@ function CardSection() {
             }}
             onMouseEnter={() => setIsCard2Hovered(true)}
             onMouseLeave={() => setIsCard2Hovered(false)}
-            className="relative h-[250px] w-[40%] overflow-hidden rounded-md bg-[#EDFF66]"
+            className="relative h-[300px] w-[40%] overflow-hidden rounded-md bg-[#EDFF66]"
           >
             <div
               style={{
@@ -187,7 +208,7 @@ function CardSection() {
             </div>
           </div>
         </div>
-        <div className="flex flex-1 flex-col gap-4 border border-blue-500">
+        <div className="flex flex-1 flex-col gap-4">
           {/* Card Right 4 */}
           <div
             id="card-4"
@@ -225,9 +246,60 @@ function CardSection() {
               />
             </div>
           </div>
-          <div className="h-[300px] w-[200px] bg-purple-500">a</div>
-          <div className="h-[300px] w-[200px] bg-purple-500">a</div>
-          <div className="h-[300px] w-[200px] bg-purple-500">a</div>
+
+          {/* Card Right 5 */}
+          <div className="relative h-[300px] w-[40%] overflow-hidden rounded-md border border-[#2D2D30] bg-black">
+            <div className="absolute top-4 left-4">
+              <h1 className="special-font pointer-events-none font-zentry text-5xl text-nowrap text-blue-50">
+                W<b>o</b>rld-Class <br />B<b>a</b>ckers
+              </h1>
+            </div>
+
+            <div className="absolute right-4 bottom-4 z-20">
+              <div className="flex flex-col gap-2 text-end font-robert-medium text-[10px] leading-1 text-blue-50 uppercase">
+                <p>Coinbase Ventures</p>
+                <p>Vsi Labs</p>
+                <p>Spatan</p>
+                <p>Longhash</p>
+                <p>Pantera Capital</p>
+                <p>Animoca Brands</p>
+                <p>Defiance Capital</p>
+                <p>Play Ventures</p>
+                <p>Skyvision Capital</p>
+                <p>Vessel Capital</p>
+                <p>Arche Fund</p>
+                <p>Synergis</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Card Right 6 */}
+          <div
+            style={{
+              perspective: "1000px",
+            }}
+            onMouseEnter={() => setIsCard6Hovered(true)}
+            onMouseLeave={() => setIsCard6Hovered(false)}
+            className="relative h-[300px] w-[65%] overflow-hidden rounded-md bg-[#DFDFF2]"
+          >
+            <p className="absolute top-4 left-4 font-robert-medium text-xs text-black">
+              Revenue generated <br />
+              2024
+            </p>
+            <div
+              style={{
+                transformStyle: "preserve-3d",
+              }}
+              className="absolute-center z-30"
+            >
+              <h1
+                id="card-6-text"
+                className="special-font pointer-events-none font-zentry text-[10rem] text-nowrap text-black"
+              >
+                40<b>M</b>
+              </h1>
+            </div>
+          </div>
         </div>
       </div>
     </div>
