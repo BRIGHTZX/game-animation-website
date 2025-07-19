@@ -1,0 +1,210 @@
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
+
+gsap.registerPlugin(ScrollTrigger);
+function TextChangeColorSection() {
+  const sectionRef = useRef();
+  useGSAP(
+    () => {
+      const texts = gsap.utils.toArray("h1[id^='text-']");
+      const subTexts = gsap.utils.toArray("div[id^='subText-']");
+
+      texts.forEach((text) => {
+        ScrollTrigger.create({
+          trigger: text,
+          start: "top center",
+          end: "center center",
+          toggleActions: "play none play reverse",
+          onEnter: () => {
+            // Reset สีทุกตัว
+            texts.forEach((t) => gsap.to(t, { color: "#DFDFF2", duration: 0 }));
+            // เปลี่ยนสีตัวที่ active
+            gsap.to(text, { color: "#EF6", duration: 0 });
+          },
+          onEnterBack: () => {
+            // Reset สีทุกตัว
+            texts.forEach((t) => gsap.to(t, { color: "#DFDFF2", duration: 0 }));
+            // เปลี่ยนสีตัวที่ active
+            gsap.to(text, { color: "#EF6", duration: 0 });
+          },
+        });
+      });
+
+      subTexts.forEach((st) => {
+        ScrollTrigger.create({
+          trigger: st,
+          start: "40% center",
+          end: "70% center",
+          toggleActions: "play none play reverse",
+          onEnter: () => {
+            // Reset สีทุกตัว
+            subTexts.forEach((t) =>
+              gsap.to(t, { color: "#DFDFF2", duration: 0 }),
+            );
+            // เปลี่ยนสีตัวที่ active
+            gsap.to(st, { color: "#EF6", duration: 0 });
+          },
+          onEnterBack: () => {
+            // Reset สีทุกตัว
+            subTexts.forEach((t) =>
+              gsap.to(t, { color: "#DFDFF2", duration: 0 }),
+            );
+            // เปลี่ยนสีตัวที่ active
+            gsap.to(st, { color: "#EF6", duration: 0 });
+          },
+        });
+      });
+
+      gsap.to("#des-text", {
+        position: "fixed",
+        top: "10%",
+        left: "0",
+        right: "0",
+        zIndex: 1000,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 50%",
+          end: "bottom 50%",
+          markers: true,
+        },
+      });
+    },
+    { scope: sectionRef },
+  );
+  return (
+    <section ref={sectionRef} className="relative bg-black pt-80">
+      <div className="container mx-auto h-[150vh]">
+        {/* Sticky Text */}
+        <div
+          id="des-text"
+          className="z-1000 h-fit flex-1 border border-blue-500"
+        >
+          <p className="w-96 text-lg text-[#676666]">
+            <span className="text-white">Our gaming partners</span> span Our
+            gaming partners span projects, communities protocols, &
+            infrastructure, accelerating expansive growth of the new gaming era
+          </p>
+        </div>
+
+        <div className="absolute right-0 border border-amber-500 leading-[5rem]">
+          <TextColor
+            textId="text-1"
+            subTextId="subText-1"
+            text={
+              <>
+                O<b>U</b>R PARTNERS
+              </>
+            }
+          />
+          <TextColor
+            textId="text-2"
+            subTextId="subText-2"
+            text={<>YZILABS</>}
+            subText="BACKERS"
+          />
+          <TextColor
+            textId="text-3"
+            subTextId="subText-3"
+            text={<>COINBASE VENTURES</>}
+            subText="BACKERS"
+          />
+          <TextColor
+            textId="text-4"
+            subTextId="subText-4"
+            text={<>PANTERA CAPITAL</>}
+            subText="BACKERS"
+          />
+          <TextColor
+            textId="text-5"
+            subTextId="subText-5"
+            text={<>DEFIANCE CAPITAL</>}
+            subText="BACKERS"
+          />
+          <TextColor
+            textId="text-6"
+            subTextId="subText-6"
+            text={<>ANIMOCA BRANDS</>}
+            subText="BACKERS"
+          />
+          <TextColor
+            textId="text-7"
+            subTextId="subText-7"
+            text={<>SKYVISION CAPITAL</>}
+            subText="BACKERS"
+          />
+          <TextColor
+            textId="text-8"
+            subTextId="subText-8"
+            text={<>PLAY VENTURE</>}
+            subText="BACKERS"
+          />
+          <TextColor
+            textId="text-9"
+            subTextId="subText-9"
+            text={<>VESSEL CAPITAL</>}
+            subText="BACKERS"
+          />
+          <TextColor
+            textId="text-10"
+            subTextId="subText-10"
+            text={<>ARCHE FUND</>}
+            subText="BACKERS"
+          />
+          <TextColor
+            textId="text-11"
+            subTextId="subText-11"
+            text={<>MARBLEX</>}
+            subText="GAMING"
+          />
+          <TextColor
+            textId="text-12"
+            subTextId="subText-12"
+            text={<>FNATIC</>}
+            subText="GAMING"
+          />
+          <TextColor
+            textId="text-13"
+            subTextId="subText-13"
+            text={<>XSET</>}
+            subText="GAMING"
+          />
+          <TextColor
+            textId="text-14"
+            subTextId="subText-14"
+            text={<>JAMBO</>}
+            subText="WEB3"
+          />
+          <TextColor
+            textId="text-15"
+            subTextId="subText-15"
+            text={<>AWS</>}
+            subText="BRANDS"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default TextChangeColorSection;
+
+function TextColor({ textId, subTextId, text, subText }) {
+  return (
+    <div className="relative">
+      {subText && (
+        <div id={subTextId} className="absolute -top-8 -left-14 text-[#676666]">
+          <span className="text-[9px]">{subText}</span>
+        </div>
+      )}
+      <h1
+        id={textId}
+        className="special-font my-0 py-0 font-zentry text-6xl text-[#DFDFF2]"
+      >
+        {text}
+      </h1>
+    </div>
+  );
+}

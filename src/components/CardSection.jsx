@@ -78,7 +78,6 @@ function CardSection() {
           start: "top 90%",
           end: "bottom top",
           toggleActions: "play none play reverse",
-          markers: true,
         },
       },
     );
@@ -96,7 +95,6 @@ function CardSection() {
           start: "top 90%",
           end: "bottom top",
           toggleActions: "play none play reverse",
-          markers: true,
         },
       },
     );
@@ -114,7 +112,6 @@ function CardSection() {
           start: "top 90%",
           end: "bottom top",
           toggleActions: "play none play reverse",
-          markers: true,
         },
       },
     );
@@ -132,7 +129,6 @@ function CardSection() {
           start: "top 90%",
           end: "bottom top",
           toggleActions: "play none play reverse",
-          markers: true,
         },
       },
     );
@@ -150,7 +146,6 @@ function CardSection() {
           start: "top 90%",
           end: "bottom top",
           toggleActions: "play none play reverse",
-          markers: true,
         },
       },
     );
@@ -168,7 +163,6 @@ function CardSection() {
           start: "top 90%",
           end: "bottom top",
           toggleActions: "play none play reverse",
-          markers: true,
         },
       },
     );

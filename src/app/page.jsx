@@ -6,6 +6,7 @@ import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import PoweredBySection from "@/components/PoweredBySection";
 import StorySection from "@/components/StorySection";
+import TextChangeColorSection from "@/components/TextChangeColorSection";
 import WhoWeAreSection from "@/components/WhoWeAreSection";
 import useLenisScroll from "@/hooks/useLenis";
 
@@ -21,6 +22,7 @@ export default function Home() {
       <PoweredBySection />
       <WhoWeAreSection />
       <CardSection />
+      <TextChangeColorSection />
     </main>
   );
 }
