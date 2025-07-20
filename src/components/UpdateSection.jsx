@@ -1,6 +1,8 @@
 import Image from "next/image";
 import TextRightAnimation from "./TextRightAnimation";
 import TrapezoidButton from "./TrapzoidButton";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 
 function UpdateSection() {
   return (
@@ -60,17 +62,70 @@ function UpdateSection() {
 export default UpdateSection;
 
 function UpdateCardImage({ imgSrc, date, text }) {
+  const [isHovering, setIsHovering] = useState(false);
+  const sectionRef = useRef(null);
+  const imageRef = useRef(null);
+
+  const handleMouseMove = ({ clientX, clientY, currentTarget }) => {
+    const rect = currentTarget.getBoundingClientRect();
+    const xPos = clientX - rect.left;
+    const yPos = clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((yPos - centerY) / centerY) * 10;
+    const rotateY = ((xPos - centerX) / centerX) * -10;
+
+    if (isHovering) {
+      gsap.to(imageRef.current, {
+        rotateX: rotateX,
+        rotateY: rotateY,
+        duration: 1,
+        ease: "power1.out",
+      });
+    }
+  };
+
+  // eslint-disable-next-line no-undef
+  useEffect(() => {
+    if (!isHovering) {
+      gsap.to(imageRef.current, {
+        rotationX: 0,
+        rotationY: 0,
+        perspective: 1000,
+        duration: 1,
+        ease: "power1.out",
+      });
+    }
+  }, [isHovering]);
+
   return (
-    <div className="w-full">
-      <div className="relative h-[400px] w-full overflow-hidden rounded-md border-2 border-black">
-        <Image
-          src={imgSrc}
-          alt="update-card-image"
-          width={1000}
-          height={1000}
-          className="h-full w-full object-cover"
-        />
+    <div>
+      <div
+        ref={sectionRef}
+        style={{
+          perspective: "1000px",
+        }}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        onMouseMove={handleMouseMove}
+      >
+        <div
+          ref={imageRef}
+          style={{ transformStyle: "preserve-3d" }}
+          className="relative h-[400px] w-full overflow-hidden rounded-md border-2 border-black"
+        >
+          <Image
+            src={imgSrc}
+            alt="update-card-image"
+            width={1000}
+            height={1000}
+            className="h-full w-full object-cover"
+          />
+        </div>
       </div>
+
       <div className="mt-8 flex gap-10">
         <p className="font-robert-medium text-xs text-black">{date}</p>
         <div className="w-1/2 text-black">
