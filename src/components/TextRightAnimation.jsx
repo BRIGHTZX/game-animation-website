@@ -8,7 +8,7 @@ import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin, SplitText);
 
-function TextLeftAnimation({
+function TextRightAnimation({
   textId,
   text,
   textClass,
@@ -17,15 +17,19 @@ function TextLeftAnimation({
   subTextClass,
   rotateX,
   rotateY,
+  XPosition,
+  YPosition,
 }) {
   const sectionRef = useRef(null);
   const textContainerRef = useRef(null);
 
   useGSAP(() => {
-    gsap.from(textContainerRef.current, {
-      rotateX: rotateX ?? -30,
-      rotateY: rotateY ?? -80,
-      duration: 1,
+    gsap.from(`#${textId}`, {
+      x: 200,
+      rotateX: rotateX ?? 50, // ก้มลง (ค่าบวก = ก้ม)
+      rotateY: rotateY ?? 50, // ก้มลง (ค่าบวก = ก้ม)
+      transformOrigin: "0% 50%", // จุดหมุนขวาล่าง
+      duration: 1.5,
       ease: "power1.out",
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -44,8 +48,8 @@ function TextLeftAnimation({
     });
 
     gsap.set(`#${textId}`, {
-      xPercent: 5,
-      yPercent: 10,
+      xPercent: XPosition ?? 5,
+      yPercent: YPosition ?? 10,
       scale: 1,
       opacity: 1,
     });
@@ -61,7 +65,7 @@ function TextLeftAnimation({
     });
 
     tl.from(wordSplit.words, {
-      x: -50,
+      x: 50,
       y: 20,
       autoAlpha: 0,
       scale: 1,
@@ -84,15 +88,17 @@ function TextLeftAnimation({
       style={{ perspective: "1000px" }}
       className="relative"
     >
-      <p
-        id={subTextId}
-        className={cn(
-          "absolute top-0 left-20 font-robert-medium text-[0.7rem] font-bold text-black uppercase",
-          subTextClass,
-        )}
-      >
-        {subText}
-      </p>
+      {subText && (
+        <p
+          id={subTextId}
+          className={cn(
+            "absolute top-0 left-20 font-robert-medium text-[0.7rem] font-bold text-black uppercase",
+            subTextClass,
+          )}
+        >
+          {subText}
+        </p>
+      )}
       <div
         ref={textContainerRef}
         style={{
@@ -113,4 +119,4 @@ function TextLeftAnimation({
   );
 }
 
-export default TextLeftAnimation;
+export default TextRightAnimation;

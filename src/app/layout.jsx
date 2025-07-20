@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`w-[100dvw] overflow-x-hidden ${circular.variable} ${zentry.variable} ${general.variable} ${robertMedium.variable} ${robertRegular.variable} antialiased`}
+        className={`w-full ${circular.variable} ${zentry.variable} ${general.variable} ${robertMedium.variable} ${robertRegular.variable} antialiased`}
       >
         {children}
       </body>

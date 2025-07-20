@@ -4,13 +4,16 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
+
 function TextChangeColorSection() {
   const sectionRef = useRef();
+
   useGSAP(
     () => {
       const texts = gsap.utils.toArray("h1[id^='text-']");
       const subTexts = gsap.utils.toArray("div[id^='subText-']");
 
+      // Text color change animations
       texts.forEach((text) => {
         ScrollTrigger.create({
           trigger: text,
@@ -32,6 +35,7 @@ function TextChangeColorSection() {
         });
       });
 
+      // SubText color change animations
       subTexts.forEach((st) => {
         ScrollTrigger.create({
           trigger: st,
@@ -56,40 +60,27 @@ function TextChangeColorSection() {
           },
         });
       });
-
-      gsap.to("#des-text", {
-        position: "fixed",
-        top: "10%",
-        left: "0",
-        right: "0",
-        zIndex: 1000,
-        ease: "power1.out",
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 50%",
-          end: "bottom 50%",
-          markers: true,
-        },
-      });
     },
     { scope: sectionRef },
   );
+
   return (
-    <section ref={sectionRef} className="relative bg-black pt-80">
-      <div className="container mx-auto h-[150vh]">
-        {/* Sticky Text */}
+    <section ref={sectionRef} className="relative w-screen bg-black pt-80">
+      <div className="relative container mx-auto min-h-[150vh]">
+        {/* Description Text - แสดงแน่นอน */}
         <div
           id="des-text"
-          className="z-1000 h-fit flex-1 border border-blue-500"
+          className="sticky top-1/2 h-fit w-fit -translate-y-1/2"
         >
-          <p className="w-96 text-lg text-[#676666]">
+          <p className="w-96 rounded bg-black/50 p-4 text-lg text-[#676666]">
             <span className="text-white">Our gaming partners</span> span Our
             gaming partners span projects, communities protocols, &
             infrastructure, accelerating expansive growth of the new gaming era
           </p>
         </div>
 
-        <div className="absolute right-0 border border-amber-500 leading-[5rem]">
+        {/* Partners List - เพิ่ม margin-top เพื่อให้เห็น des-text */}
+        <div className="absolute top-0 right-80 leading-[5rem] xl:right-[20%]">
           <TextColor
             textId="text-1"
             subTextId="subText-1"
@@ -189,22 +180,25 @@ function TextChangeColorSection() {
   );
 }
 
-export default TextChangeColorSection;
-
 function TextColor({ textId, subTextId, text, subText }) {
   return (
     <div className="relative">
       {subText && (
-        <div id={subTextId} className="absolute -top-8 -left-14 text-[#676666]">
-          <span className="text-[9px]">{subText}</span>
+        <div
+          id={subTextId}
+          className="absolute -top-8 -left-14 text-[#676666] xl:-top-7"
+        >
+          <span className="text-[9px] xl:text-[11px]">{subText}</span>
         </div>
       )}
       <h1
         id={textId}
-        className="special-font my-0 py-0 font-zentry text-6xl text-[#DFDFF2]"
+        className="special-font my-0 py-0 font-zentry text-6xl text-[#DFDFF2] xl:text-7xl"
       >
         {text}
       </h1>
     </div>
   );
 }
+
+export default TextChangeColorSection;
