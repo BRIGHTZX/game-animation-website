@@ -35,10 +35,6 @@ function TextLeftAnimation({
       },
     });
 
-    const subTextSplit = SplitText.create(`#${subTextId}`, {
-      type: "words",
-    });
-
     const wordSplit = SplitText.create(`#${textId}`, {
       type: "words",
     });
@@ -70,12 +66,18 @@ function TextLeftAnimation({
       ease: "power1.out",
     });
 
-    tl.from(subTextSplit.words, {
-      y: 10,
-      opacity: 0,
-      stagger: 0.05,
-      duration: 0.5,
-    });
+    if (subText) {
+      const subTextSplit = SplitText.create(`#${subTextId}`, {
+        type: "words",
+      });
+
+      tl.from(subTextSplit.words, {
+        y: 10,
+        opacity: 0,
+        stagger: 0.05,
+        duration: 0.5,
+      });
+    }
   }, []);
 
   return (

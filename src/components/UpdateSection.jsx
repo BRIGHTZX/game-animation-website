@@ -87,7 +87,6 @@ function UpdateCardImage({ imgSrc, date, text }) {
     }
   };
 
-  // eslint-disable-next-line no-undef
   useEffect(() => {
     if (!isHovering) {
       gsap.to(imageRef.current, {
