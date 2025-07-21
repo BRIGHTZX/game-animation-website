@@ -54,6 +54,16 @@
   .box-image {
     @apply rounded-xl bg-black p-4;
   }
+
+  .footer-card-mask-1 {
+    clip-path: polygon(15% 0, 100% 15%, 70% 100%, 0% 100%);
+  }
+  .footer-card-mask-2 {
+    clip-path: polygon(0% 0, 100% 0%, 70% 90%, 10% 80%);
+  }
+  .footer-card-mask-3 {
+    clip-path: polygon(20% 0%, 90% 0%, 90% 100%, 0% 100%);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
