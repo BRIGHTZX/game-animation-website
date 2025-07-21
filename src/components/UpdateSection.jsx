@@ -3,6 +3,9 @@ import TextRightAnimation from "./TextRightAnimation";
 import TrapezoidButton from "./TrapzoidButton";
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function UpdateSection() {
   return (
@@ -66,7 +69,7 @@ function UpdateCardImage({ imgSrc, date, text }) {
   const sectionRef = useRef(null);
   const imageRef = useRef(null);
 
-  // ✅ Mouse Move Effect (Tilt)
+  // ✅ Mouse Tilt (เหมือนเดิม)
   const handleMouseMove = ({ clientX, clientY, currentTarget }) => {
     const rect = currentTarget.getBoundingClientRect();
     const xPos = clientX - rect.left;
@@ -79,19 +82,18 @@ function UpdateCardImage({ imgSrc, date, text }) {
     const rotateY = ((xPos - centerX) / centerX) * -10;
 
     if (isHovering) {
-      gsap.to(imageRef.current, {
-        rotateX: rotateX,
-        rotateY: rotateY,
+      gsap.to(sectionRef.current, {
+        rotateX,
+        rotateY,
         duration: 1,
         ease: "power1.out",
       });
     }
   };
 
-  // ✅ Reset tilt when mouse leave
   useEffect(() => {
     if (!isHovering) {
-      gsap.to(imageRef.current, {
+      gsap.to(sectionRef.current, {
         rotationX: 0,
         rotationY: 0,
         perspective: 1000,
@@ -101,18 +103,19 @@ function UpdateCardImage({ imgSrc, date, text }) {
     }
   }, [isHovering]);
 
-  // ✅ Parallax Scroll Effect
+  // ✅ Parallax เฉพาะ Image
   useEffect(() => {
     if (!imageRef.current || !sectionRef.current) return;
 
     gsap.to(imageRef.current, {
-      y: "-30", // เลื่อนขึ้น 30px ตอน scroll
+      y: -20, // เลื่อนขึ้น 50px ตอน scroll
       ease: "none",
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top bottom", // เริ่มตอน section เข้า viewport
-        end: "bottom top", // จบตอนเลื่อนผ่าน
-        scrub: true, // sync กับ scroll
+        start: "top 80%",
+        end: "center center",
+        scrub: true,
+        markers: true,
       },
     });
   }, []);
@@ -120,26 +123,21 @@ function UpdateCardImage({ imgSrc, date, text }) {
   return (
     <div ref={sectionRef}>
       <div
-        style={{
-          perspective: "1000px",
-        }}
+        style={{ perspective: "1000px" }}
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         onMouseMove={handleMouseMove}
+        className="relative h-[400px] w-full overflow-hidden rounded-md border-2 border-black"
       >
-        <div
+        {/* ✅ ภาพใหญ่กว่ากรอบ + Parallax */}
+        <Image
           ref={imageRef}
-          style={{ transformStyle: "preserve-3d" }}
-          className="relative h-[400px] w-full overflow-hidden rounded-md border-2 border-black"
-        >
-          <Image
-            src={imgSrc}
-            alt="update-card-image"
-            width={1000}
-            height={1000}
-            className="h-full w-full object-cover"
-          />
-        </div>
+          src={imgSrc}
+          alt="update-card-image"
+          width={1000}
+          height={1000}
+          className="image h-full w-full scale-115 object-top" // ✅ ทำให้ใหญ่กว่ากรอบ
+        />
       </div>
 
       <div className="mt-8 flex gap-10">

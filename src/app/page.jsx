@@ -25,6 +25,8 @@ export default function Home() {
       <CardSection />
       <TextChangeColorSection />
       <UpdateSection />
+
+      <div className="h-screen" />
     </main>
   );
 }
