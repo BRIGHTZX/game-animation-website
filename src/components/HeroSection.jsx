@@ -17,7 +17,7 @@ function HeroSection() {
   const [hasClicked, setHasClicked] = useState(false);
   const [loadedVideos, setLoadedVideos] = useState(0);
   const [isCompletedChangeVideo, setIsCompletedChangeVideo] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState();
 
   const totalVideos = 4;
   const nextVideoRef = useRef(null);
@@ -123,8 +123,10 @@ function HeroSection() {
 
   useEffect(() => {
     if (loadedVideos === totalVideos - 1) {
+      console.log("call");
       setIsLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadedVideos]);
 
   useGSAP(
@@ -174,135 +176,140 @@ function HeroSection() {
   }, []);
 
   return (
-    <div className="relative h-screen w-screen overflow-hidden bg-[#DFDFF2]">
-      <div
-        id="video-frame"
-        className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg"
-      >
-        <div>
-          <div className="absolute-center z-50 size-64 cursor-pointer rounded-lg">
-            <VideoPreview isChangeVideo={isCompletedChangeVideo}>
-              <div
-                onClick={handleMiniVideoClick}
-                className="size-64 origin-center opacity-0 transition-all duration-500 ease-in hover:opacity-100"
-              >
+    <div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <div className="relative h-screen w-screen overflow-hidden bg-[#DFDFF2]">
+          <div
+            id="video-frame"
+            className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg"
+          >
+            <div>
+              <div className="absolute-center z-50 size-64 cursor-pointer rounded-lg">
+                <VideoPreview isChangeVideo={isCompletedChangeVideo}>
+                  <div
+                    onClick={handleMiniVideoClick}
+                    className="size-64 origin-center opacity-0 transition-all duration-500 ease-in hover:opacity-100"
+                  >
+                    <video
+                      id="current-video"
+                      src={getVideoSrc((currentIndex % totalVideos) + 1)}
+                      muted
+                      loop
+                      className="size-64 origin-center scale-150 object-cover object-center"
+                    />
+                  </div>
+                </VideoPreview>
+              </div>
+
+              <video
+                ref={nextVideoRef}
+                src={getVideoSrc(currentIndex)}
+                loop
+                muted
+                id="next-video"
+                className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
+                onLoadedData={handleVideoLoad}
+              />
+
+              {currentIndex === 1 && !hasClicked ? (
                 <video
-                  id="current-video"
-                  src={getVideoSrc((currentIndex % totalVideos) + 1)}
-                  muted
+                  src={getVideoSrc(currentIndex)}
+                  autoPlay
                   loop
-                  className="size-64 origin-center scale-150 object-cover object-center"
+                  muted
+                  className="absolute top-0 left-0 size-full object-cover object-center"
+                  onLoadedData={handleVideoLoad}
+                />
+              ) : (
+                <video
+                  src={getVideoSrc(
+                    currentIndex === 1 ? totalVideos : currentIndex - 1,
+                  )}
+                  autoPlay
+                  loop
+                  muted
+                  className="absolute top-0 left-0 size-full object-cover object-center"
+                  onLoadedData={handleVideoLoad}
+                />
+              )}
+            </div>
+            <div className="absolute top-10 left-24 z-50">
+              <h1 className="hero-heading special-font font-zentry! font-extrabold text-white">
+                REDEFI<b>N</b>E
+              </h1>
+
+              <p>
+                Enter the Metagame <br /> Unleash the Play Economy
+              </p>
+
+              <div className="mt-4">
+                <TrapezoidButton
+                  text="Watch Tailer"
+                  btnClass="bg-yellow-200"
+                  textClass="text-black"
                 />
               </div>
-            </VideoPreview>
+            </div>
+
+            <div className="absolute right-24 -bottom-10 z-50">
+              <h1
+                id="text-content-1"
+                className="hero-heading special-font font-zentry! font-extrabold text-white"
+              >
+                REDEFI<b>N</b>E
+              </h1>
+              <h1
+                id="text-content-2"
+                className="hero-heading special-font hidden font-zentry! font-extrabold text-white"
+              >
+                IDE<b>N</b>TITY
+              </h1>
+              <h1
+                id="text-content-3"
+                className="hero-heading special-font hidden font-zentry! font-extrabold text-white"
+              >
+                G<b>A</b>MING
+              </h1>
+              <h1
+                id="text-content-4"
+                className="hero-heading special-font hidden font-zentry! font-extrabold text-white"
+              >
+                RE<b>A</b>LITY
+              </h1>
+            </div>
           </div>
 
-          <video
-            ref={nextVideoRef}
-            src={getVideoSrc(currentIndex)}
-            loop
-            muted
-            id="next-video"
-            className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
-            onLoadedData={handleVideoLoad}
-          />
-
-          {currentIndex === 1 && !hasClicked ? (
-            <video
-              src={getVideoSrc(currentIndex)}
-              autoPlay
-              loop
-              muted
-              className="absolute top-0 left-0 size-full object-cover object-center"
-              onLoadedData={handleVideoLoad}
-            />
-          ) : (
-            <video
-              src={getVideoSrc(
-                currentIndex === 1 ? totalVideos : currentIndex - 1,
-              )}
-              autoPlay
-              loop
-              muted
-              className="absolute top-0 left-0 size-full object-cover object-center"
-              onLoadedData={handleVideoLoad}
-            />
-          )}
-        </div>
-        <div className="absolute top-10 left-24 z-50">
-          <h1 className="hero-heading special-font font-zentry! font-extrabold text-white">
-            REDEFI<b>N</b>E
-          </h1>
-
-          <p>
-            Enter the Metagame <br /> Unleash the Play Economy
-          </p>
-
-          <div className="mt-4">
-            <TrapezoidButton
-              text="Watch Tailer"
-              btnClass="bg-yellow-200"
-              textClass="text-black"
-            />
+          <div className="absolute right-19 -bottom-10">
+            <h1
+              id="text-content-bg-1"
+              className="hero-heading special-font font-zentry! font-extrabold text-black"
+            >
+              REDEFI<b>N</b>E
+            </h1>
+            <h1
+              id="text-content-bg-2"
+              className="hero-heading special-font hidden font-zentry! font-extrabold text-black"
+            >
+              IDE<b>N</b>TITY
+            </h1>
+            <h1
+              id="text-content-bg-3"
+              className="hero-heading special-font hidden font-zentry! font-extrabold text-black"
+            >
+              G<b>A</b>MING
+            </h1>
+            <h1
+              id="text-content-bg-4"
+              className="hero-heading special-font hidden font-zentry! font-extrabold text-black"
+            >
+              RE<b>A</b>LITY
+            </h1>
           </div>
         </div>
-
-        <div className="absolute right-24 -bottom-10 z-50">
-          <h1
-            id="text-content-1"
-            className="hero-heading special-font font-zentry! font-extrabold text-white"
-          >
-            REDEFI<b>N</b>E
-          </h1>
-          <h1
-            id="text-content-2"
-            className="hero-heading special-font hidden font-zentry! font-extrabold text-white"
-          >
-            IDE<b>N</b>TITY
-          </h1>
-          <h1
-            id="text-content-3"
-            className="hero-heading special-font hidden font-zentry! font-extrabold text-white"
-          >
-            G<b>A</b>MING
-          </h1>
-          <h1
-            id="text-content-4"
-            className="hero-heading special-font hidden font-zentry! font-extrabold text-white"
-          >
-            RE<b>A</b>LITY
-          </h1>
-        </div>
-      </div>
-
-      <div className="absolute right-19 -bottom-10">
-        <h1
-          id="text-content-bg-1"
-          className="hero-heading special-font font-zentry! font-extrabold text-black"
-        >
-          REDEFI<b>N</b>E
-        </h1>
-        <h1
-          id="text-content-bg-2"
-          className="hero-heading special-font hidden font-zentry! font-extrabold text-black"
-        >
-          IDE<b>N</b>TITY
-        </h1>
-        <h1
-          id="text-content-bg-3"
-          className="hero-heading special-font hidden font-zentry! font-extrabold text-black"
-        >
-          G<b>A</b>MING
-        </h1>
-        <h1
-          id="text-content-bg-4"
-          className="hero-heading special-font hidden font-zentry! font-extrabold text-black"
-        >
-          RE<b>A</b>LITY
-        </h1>
-      </div>
+      )}
     </div>
   );
 }
-
 export default HeroSection;
