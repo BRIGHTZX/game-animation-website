@@ -7,58 +7,79 @@ gsap.registerPlugin(ScrollTrigger);
 
 function TextChangeColorSection() {
   const sectionRef = useRef();
+  const desTextRef = useRef();
 
   useGSAP(
     () => {
       const texts = gsap.utils.toArray("h1[id^='text-']");
       const subTexts = gsap.utils.toArray("div[id^='subText-']");
 
-      // Text color change animations
-      texts.forEach((text) => {
-        ScrollTrigger.create({
-          trigger: text,
-          start: "top center",
-          end: "center center",
-          toggleActions: "play none play reverse",
-          onEnter: () => {
-            // Reset สีทุกตัว
-            texts.forEach((t) => gsap.to(t, { color: "#DFDFF2", duration: 0 }));
-            // เปลี่ยนสีตัวที่ active
-            gsap.to(text, { color: "#EF6", duration: 0 });
-          },
-          onEnterBack: () => {
-            // Reset สีทุกตัว
-            texts.forEach((t) => gsap.to(t, { color: "#DFDFF2", duration: 0 }));
-            // เปลี่ยนสีตัวที่ active
-            gsap.to(text, { color: "#EF6", duration: 0 });
-          },
-        });
+      const tlText = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "15% center",
+          end: "80% center",
+          scrub: true,
+        },
+        onUpdate: () => {
+          sectionRef.current.style.backgroundColor = "black";
+          desTextRef.current.style.display = "block";
+        },
+        onComplete: () => {
+          sectionRef.current.style.backgroundColor = "#DFDFF2";
+          desTextRef.current.style.display = "none";
+          texts.map((t) => {
+            t.style.color = "#000000";
+          });
+          // subTexts.map((st) => {
+          //   st.style.color = "";
+          // });
+        },
       });
 
-      // SubText color change animations
-      subTexts.forEach((st) => {
-        ScrollTrigger.create({
-          trigger: st,
-          start: "40% center",
-          end: "70% center",
-          toggleActions: "play none play reverse",
-          onEnter: () => {
-            // Reset สีทุกตัว
-            subTexts.forEach((t) =>
-              gsap.to(t, { color: "#DFDFF2", duration: 0 }),
-            );
-            // เปลี่ยนสีตัวที่ active
-            gsap.to(st, { color: "#EF6", duration: 0 });
-          },
-          onEnterBack: () => {
-            // Reset สีทุกตัว
-            subTexts.forEach((t) =>
-              gsap.to(t, { color: "#DFDFF2", duration: 0 }),
-            );
-            // เปลี่ยนสีตัวที่ active
-            gsap.to(st, { color: "#EF6", duration: 0 });
-          },
-        });
+      const tlSubText = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "19.5% center",
+          end: "80% center",
+          scrub: true,
+        },
+      });
+
+      texts.map((text) => {
+        tlText
+          .to(text, {
+            color: "#EF6",
+            duration: 0,
+            ease: "power1.out",
+          })
+          .to(
+            text,
+            {
+              color: "#DFDFF2",
+              duration: 0,
+              ease: "power1.out",
+            },
+            "+=0.1",
+          );
+      });
+
+      subTexts.map((st) => {
+        tlSubText
+          .to(st, {
+            color: "#EF6",
+            duration: 0,
+            ease: "power1.out",
+          })
+          .to(
+            st,
+            {
+              color: "#DFDFF2",
+              duration: 0,
+              ease: "power1.out",
+            },
+            "+=0.1",
+          );
       });
     },
     { scope: sectionRef },
@@ -69,7 +90,7 @@ function TextChangeColorSection() {
       <div className="relative container mx-auto min-h-[150vh]">
         {/* Description Text - แสดงแน่นอน */}
         <div
-          id="des-text"
+          ref={desTextRef}
           className="sticky top-1/2 h-fit w-fit -translate-y-1/2"
         >
           <p className="w-96 rounded bg-black/50 p-4 text-lg text-[#676666]">
