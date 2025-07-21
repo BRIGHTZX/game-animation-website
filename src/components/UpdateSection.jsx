@@ -11,7 +11,7 @@ function UpdateSection() {
         <div className="flex gap-8">
           {/* ✅ Sticky Left */}
           <div className="w-1/2">
-            <div className="sticky top-40">
+            <div className="sticky top-24">
               <TextRightAnimation
                 textId="update-section-header-char"
                 text={
@@ -66,6 +66,7 @@ function UpdateCardImage({ imgSrc, date, text }) {
   const sectionRef = useRef(null);
   const imageRef = useRef(null);
 
+  // ✅ Mouse Move Effect (Tilt)
   const handleMouseMove = ({ clientX, clientY, currentTarget }) => {
     const rect = currentTarget.getBoundingClientRect();
     const xPos = clientX - rect.left;
@@ -87,6 +88,7 @@ function UpdateCardImage({ imgSrc, date, text }) {
     }
   };
 
+  // ✅ Reset tilt when mouse leave
   useEffect(() => {
     if (!isHovering) {
       gsap.to(imageRef.current, {
@@ -99,10 +101,25 @@ function UpdateCardImage({ imgSrc, date, text }) {
     }
   }, [isHovering]);
 
+  // ✅ Parallax Scroll Effect
+  useEffect(() => {
+    if (!imageRef.current || !sectionRef.current) return;
+
+    gsap.to(imageRef.current, {
+      y: "-30", // เลื่อนขึ้น 30px ตอน scroll
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top bottom", // เริ่มตอน section เข้า viewport
+        end: "bottom top", // จบตอนเลื่อนผ่าน
+        scrub: true, // sync กับ scroll
+      },
+    });
+  }, []);
+
   return (
-    <div>
+    <div ref={sectionRef}>
       <div
-        ref={sectionRef}
         style={{
           perspective: "1000px",
         }}

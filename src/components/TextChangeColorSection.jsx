@@ -20,20 +20,26 @@ function TextChangeColorSection() {
           start: "15% center",
           end: "80% center",
           scrub: true,
-        },
-        onUpdate: () => {
-          sectionRef.current.style.backgroundColor = "black";
-          desTextRef.current.style.display = "block";
-        },
-        onComplete: () => {
-          sectionRef.current.style.backgroundColor = "#DFDFF2";
-          desTextRef.current.style.display = "none";
-          texts.map((t) => {
-            t.style.color = "#000000";
-          });
-          // subTexts.map((st) => {
-          //   st.style.color = "";
-          // });
+
+          // ✅ เหมือน ScrollTrigger ปกติ
+          onEnter: () => {
+            sectionRef.current.style.backgroundColor = "black";
+            desTextRef.current.style.display = "block";
+            texts.forEach((t) => (t.style.color = "#DFDFF2"));
+            subTexts.forEach((st) => (st.style.color = "#676666"));
+          },
+          onLeave: () => {
+            sectionRef.current.style.backgroundColor = "#DFDFF2";
+            desTextRef.current.style.display = "none";
+            texts.forEach((t) => (t.style.color = "#000000"));
+            subTexts.forEach((st) => (st.style.color = "#676666"));
+          },
+          onEnterBack: () => {
+            sectionRef.current.style.backgroundColor = "black";
+            desTextRef.current.style.display = "block";
+            texts.forEach((t) => (t.style.color = "#DFDFF2"));
+            subTexts.forEach((st) => (st.style.color = "#676666"));
+          },
         },
       });
 
