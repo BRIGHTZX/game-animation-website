@@ -64,6 +64,9 @@
   .footer-card-mask-3 {
     clip-path: polygon(20% 0%, 90% 0%, 90% 100%, 0% 100%);
   }
+  .footer-link-mask {
+    clip-path: polygon(5% 0%, 95% 10%, 90% 100%, 0% 100%);
+  }
 }
 
 @media (prefers-color-scheme: dark) {

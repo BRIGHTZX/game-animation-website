@@ -2,7 +2,7 @@
 import AboutSection from "@/components/AboutSection";
 import CardSection from "@/components/CardSection";
 import FeaturesSection from "@/components/FeaturesSection";
-import FooterCardSection from "@/components/FooterCardSection";
+import FooterSection from "@/components/FooterSection";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import PoweredBySection from "@/components/PoweredBySection";
@@ -26,7 +26,7 @@ export default function Home() {
       <CardSection />
       <TextChangeColorSection />
       <UpdateSection />
-      <FooterCardSection />
+      <FooterSection />
     </main>
   );
 }

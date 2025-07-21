@@ -12,3 +12,8 @@ export const SWORDMAN = "/img/swordman.webp";
 export const SWORDMAN_SUB = "/img/swordman-partial.webp";
 export const FOOTER_CARD_IMAGE_2 = "/img/footer-image-2.webp";
 export const FOOTER_CARD_IMAGE_3 = "/img/footer-image-3.webp";
+
+export const LINKLIST_1 = ["Home", "Prologue", "About", "Contact"];
+export const LINKLIST_2 = ["Radiant", "Nexus", "Zigma", "Azul"];
+export const LINKLIST_3 = ["Discord", "X", "Youtube", "Medium"];
+export const LINKLIST_4 = ["Media Kit"];
