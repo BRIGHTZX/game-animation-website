@@ -115,7 +115,7 @@ function UpdateCardImage({ imgSrc, date, text }) {
         start: "top 80%",
         end: "center center",
         scrub: true,
-        markers: true,
+        markers: false,
       },
     });
   }, []);
