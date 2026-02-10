@@ -5,7 +5,6 @@ import FeaturesSection from "@/components/FeaturesSection";
 import FooterSection from "@/components/FooterSection";
 import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
-import PageLoader from "@/components/PageLoader";
 import PoweredBySection from "@/components/PoweredBySection";
 import StorySection from "@/components/StorySection";
 import TextChangeColorSection from "@/components/TextChangeColorSection";
