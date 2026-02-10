@@ -12,21 +12,11 @@ import TextChangeColorSection from "@/components/TextChangeColorSection";
 import UpdateSection from "@/components/UpdateSection";
 import WhoWeAreSection from "@/components/WhoWeAreSection";
 import useLenisScroll from "@/hooks/useLenis";
-import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 200);
-  }, []);
-
   useLenisScroll();
   return (
     <div>
-      <PageLoader isLoading={isLoading} />
       <main className="w-screen">
         <Navbar />
         <HeroSection />
